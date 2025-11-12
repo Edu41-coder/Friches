@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Business Model Canvas – Application Friches</title>
+  <style>
+    :root {
+      --primary: #1877F2;
+      --dark: #111827;
+      --muted: #6b7280;
+      --bg: #f8fafc;
+      --card: #ffffff;
+      --border: #e5e7eb;
+    }
+    html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; background: var(--bg); color: var(--dark); }
+    .container { max-width: 1200px; margin: 24px auto 48px; padding: 0 16px; }
+    .header { display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom: 16px; }
+    .title { font-size: 20px; font-weight: 700; color: var(--primary); letter-spacing: .2px; }
+    .subtitle { font-size: 13px; color: var(--muted); }
+    .actions { display: flex; gap: 8px; }
+    .btn { background: var(--primary); color: #fff; border: 0; padding: 10px 14px; border-radius: 8px; cursor: pointer; font-weight: 600; }
+    .btn:hover { filter: brightness(0.95); }
+
+    .grid { display: grid; gap: 12px; grid-template-columns: 1.2fr 1.2fr 1.6fr 1.2fr 1.2fr; }
+    .row-bottom { display: grid; gap: 12px; grid-template-columns: 2.4fr 2.4fr; margin-top: 12px; }
+
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 12px 6px; box-shadow: 0 1px 2px rgba(0,0,0,.04); }
+    .card h3 { margin: 0 0 8px; font-size: 14px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); font-weight: 800; }
+    .card ul { margin: 0; padding-left: 16px; }
+    .card li { margin: 6px 0; font-size: 14px; line-height: 1.4; }
+    .vp { border: 2px solid var(--primary); }
+
+    .footer { margin-top: 16px; font-size: 12px; color: var(--muted); display:flex; justify-content:space-between; }
+
+    /* Print / A4 */
+    @media print {
+      body { background: #fff; }
+      .actions, .subtitle { display: none !important; }
+      .container { max-width: 100%; margin: 0; padding: 0; }
+      .page { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container page">
+    <div class="header">
+      <div>
+        <div class="title">Business Model Canvas – Application Friches</div>
+        <div class="subtitle">Version du: <span id="today"></span> • Portée: v1 (MVP actuel)</div>
+      </div>
+      <div class="actions">
+        <button class="btn" onclick="window.print()">Télécharger en PDF</button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <div class="card">
+        <h3>Partenaires clés</h3>
+        <ul>
+          <li>Données et institutions: DREAL, Régions/Départements, EPF, communes</li>
+          <li>Fournisseurs carto: OpenStreetMap (tuiles), Leaflet et plugins</li>
+          <li>Hébergement & infra: serveur web (Apache/PHP), MariaDB</li>
+          <li>Universités/bureaux d'études: méthodes d’analyse, validation</li>
+          <li>Communauté open data: INSEE (communes, codes), SGA/SIRENE si besoin</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Activités clés</h3>
+        <ul>
+          <li>Ingestion/normalisation des données (CSV → SQL, scripts d’import)</li>
+          <li>Mise à jour et qualité des données (contrôles, historiques)</li>
+          <li>Développement: tableau, filtres avancés, tri/pagination serveur</li>
+          <li>Cartographie: clustering, filtres par zone, synchronisation table↔carte</li>
+          <li>Analytique: agrégations SQL, graphiques (Chart.js), exports</li>
+          <li>Sécurité: auth rôles (admin/user), CSRF, validation, logs</li>
+        </ul>
+      </div>
+      <div class="card vp">
+        <h3>Proposition de valeur</h3>
+        <ul>
+          <li>Vue unifiée et interactive des friches industrielles (tableau + carte)</li>
+          <li>Décision accélérée: filtres multicritères, tri serveur, analyses visuelles</li>
+          <li>Couverture terrain: géolocalisation fiable, clustering zones denses</li>
+          <li>Transparence et traçabilité: historique (audit), rôles et droits</li>
+          <li>Performance: pagination serveur, index SQL, chargements par zone</li>
+          <li>Prêt à l’emploi sur poste (XAMPP) et déployable sur serveur</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Relations clients</h3>
+        <ul>
+          <li>Self-service sécurisé pour les utilisateurs (lecture) et admins (CRUD)</li>
+          <li>Support fonctionnel minimal (documentation, guides rapides)</li>
+          <li>Feedback produit (améliorations de filtres, champs, cartes)</li>
+          <li>Formations courtes pour administrateurs (imports, gestion utilisateurs)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Segments clients</h3>
+        <ul>
+          <li>Collectivités locales (communes, EPCI) et services urbanisme</li>
+          <li>Agences d’urbanisme, EPF, aménageurs publics</li>
+          <li>Régions/Départements (patrimoine, reconversion, attractivité)</li>
+          <li>Bureaux d’études, AMO, promoteurs (version pro)</li>
+          <li>Recherche/Université (accès data, analyses)</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row-bottom">
+      <div class="card">
+        <h3>Structure de coûts</h3>
+        <ul>
+          <li>Développement et maintenance (PHP, JS, Leaflet, Chart.js)</li>
+          <li>Hébergement/serveur, sauvegardes, supervision</li>
+          <li>Qualité de données, normalisation, indexation</li>
+          <li>Support utilisateur et documentation</li>
+          <li>Formation et gestion du changement (si déploiement élargi)</li>
+        </ul>
+      </div>
+      <div class="card">
+        <h3>Sources de revenus</h3>
+        <ul>
+          <li>MVP actuel: gratuit interne (pilotage/POC)</li>
+          <li>Abonnements organisation (SaaS) par collectivité/EPF</li>
+          <li>Hébergement/infogérance managée (SLA) et sauvegardes</li>
+          <li>Personnalisation & intégrations (SSO, flux open data, exports)</li>
+          <li>Formations, support premium, assistance à l’import/qualité data</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer">
+      <div>Produit: Application Friches • Tech: PHP 8, MariaDB, Leaflet, Chart.js</div>
+      <div>Confidentialité: interne • Auteur: Projet Friches • Licence: à définir</div>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('today').textContent = new Date().toLocaleDateString('fr-FR');
+  </script>
+</body>
+</html>

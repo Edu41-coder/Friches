@@ -1,0 +1,3 @@
+http://localhost/Friches/public/index.php?page=login
+http://localhost/Friches/public/
+http://localhost/Friches/public/index.php?page=dashboard

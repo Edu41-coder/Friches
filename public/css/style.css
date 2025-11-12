@@ -1,0 +1,77 @@
+/* ============================================================================
+   Styles pour l'application Friches
+   Fichier : public/css/style.css
+   ============================================================================ */
+
+/* Variables CSS */
+:root {
+    --primary-color: #1877F2;
+    --white: #FFFFFF;
+    --dark: #050505;
+    --muted: #6c757d;
+    --success-color: #28a745;
+    --danger-color: #dc3545;
+    --shadow: 0 6px 20px rgba(3, 10, 27, 0.08);
+    --border-radius: 0.5rem;
+    --transition: 0.15s ease-in-out;
+    --max-width: 980px;
+}
+
+/* Reset / base */
+html, body {
+    height: 100%;
+}
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #f6fbff 0%, #ffffff 100%);
+    color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Friches branding */
+.friches-navbar {
+    background: var(--white);
+    border-bottom: 1px solid rgba(0,0,0,0.04);
+}
+.friches-navbar .navbar-brand {
+    color: var(--primary-color);
+    font-weight: 700;
+}
+
+.friches-card {
+    border-radius: var(--border-radius);
+}
+
+.login-wrapper {
+    max-width: 420px;
+    width: 100%;
+}
+.login-brand {
+    color: var(--primary-color);
+    font-weight: 700;
+    letter-spacing: -0.2px;
+}
+
+.friches-footer {
+    color: var(--muted);
+    font-size: 13px;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #155db8;
+    border-color: #155db8;
+}
+
+.text-muted {
+    color: var(--muted) !important;
+}
+
+/* Alerts tweaks */
+.alert-friches {
+    border-radius: calc(var(--border-radius) / 1.2);
+}
