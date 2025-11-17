@@ -1,3 +1,27 @@
 http://localhost/Friches/public/index.php?page=login
 http://localhost/Friches/public/
 http://localhost/Friches/public/index.php?page=dashboard
+
+
+
+Git is not installed on your system (or not in your PATH). You need to install Git for Windows first.
+
+Install Git:
+
+Download from: https://git-scm.com/download/win
+Run the installer (use default options)
+Restart VS Code after installation so it picks up the updated PATH
+
+git clone --depth 1 https://github.com/Edu41-coder/Friches.git .
+
+
+Check if Git is in your PATH with this PowerShell command:
+$env:PATH -split ';' | Select-String -Pattern 'git'
+
+Or simply test if Git is accessible:
+git --version
+
+If Git is installed and in PATH, you'll see the version number (e.g., git version 2.43.0). If not, you'll get the same "command not found" error.
+
+To see your full PATH:
+$env:PATH -split ';'
