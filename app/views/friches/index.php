@@ -12,6 +12,8 @@
     <title>Tableau des Friches - Application Friches</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/Friches/public/css/style.css">
     <style>
         .table-container {
@@ -196,7 +198,7 @@
                     <div class="col-md-4">
                         <div class="input-group">
                             <span class="input-group-text"><i class="bi bi-search"></i></span>
-                            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher...">
+                            <input type="text" id="searchInput" class="form-control" placeholder="Rechercher par ID...">
                         </div>
                     </div>
                     
@@ -310,7 +312,46 @@
                         <!-- Commune -->
                         <div class="col-md-6">
                             <label class="form-label">Commune</label>
-                            <input type="text" id="filterCommune" class="form-control" placeholder="Nom de la commune">
+                            <select id="filterCommune" class="form-select" data-placeholder="Rechercher une commune...">
+                                <option value="">Toutes</option>
+                                <?php foreach ($communes as $commune): ?>
+                                    <option value="<?= htmlspecialchars($commune) ?>"><?= htmlspecialchars($commune) ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
+                        
+                        <!-- Code INSEE -->
+                        <div class="col-md-6">
+                            <label class="form-label">Code INSEE <small class="text-muted">(ou département)</small></label>
+                            <select id="filterCodeInsee" class="form-select" data-placeholder="Rechercher un code INSEE...">
+                                <option value="">Tous</option>
+                                <?php 
+                                if (isset($codesInsee) && is_array($codesInsee)) {
+                                    // Grouper les codes INSEE par département (2 premiers chiffres)
+                                    $departements = [];
+                                    foreach ($codesInsee as $code) {
+                                        $dept = substr($code, 0, 2);
+                                        if (!isset($departements[$dept])) {
+                                            $departements[$dept] = [];
+                                        }
+                                        $departements[$dept][] = $code;
+                                    }
+                                    ksort($departements);
+                                    
+                                    // Afficher les options groupées par département
+                                    foreach ($departements as $dept => $codes): ?>
+                                        <optgroup label="Département <?= htmlspecialchars($dept) ?>">
+                                            <option value="dept:<?= htmlspecialchars($dept) ?>" class="fw-bold">✓ Tout le département <?= htmlspecialchars($dept) ?> (<?= count($codes) ?> communes)</option>
+                                            <?php foreach ($codes as $code): ?>
+                                                <option value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($code) ?></option>
+                                            <?php endforeach; ?>
+                                        </optgroup>
+                                    <?php endforeach;
+                                } else {
+                                    echo '<!-- Variable $codesInsee non définie ou vide -->';
+                                }
+                                ?>
+                            </select>
                         </div>
                         
                         <!-- Pollution sol -->
@@ -412,7 +453,9 @@
         </div>
     </div>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
         // Passer les colonnes PHP à JavaScript
         const availableColumns = <?= json_encode($columns) ?>;
@@ -421,5 +464,114 @@
     </script>
     <script src="/Friches/public/js/utils.js"></script>
     <script src="/Friches/public/js/friches-table.js"></script>
+    <script>
+        // Initialiser Select2 sur les selects de filtres
+        $(document).ready(function() {
+            // Initialiser Select2 au chargement
+            initSelect2();
+            
+            // Réinitialiser Select2 à chaque ouverture du modal
+            $('#filterModal').on('shown.bs.modal', function () {
+                initSelect2();
+            });
+            
+            function initSelect2() {
+                // Détruire les instances existantes si elles existent
+                if ($('#filterCommune').hasClass('select2-hidden-accessible')) {
+                    $('#filterCommune').select2('destroy');
+                }
+                if ($('#filterCodeInsee').hasClass('select2-hidden-accessible')) {
+                    $('#filterCodeInsee').select2('destroy');
+                }
+                
+                // Réinitialiser Select2
+                $('#filterCommune').select2({
+                    theme: 'bootstrap-5',
+                    placeholder: 'Rechercher une commune...',
+                    allowClear: true,
+                    dropdownParent: $('#filterModal'),
+                    width: '100%',
+                    language: {
+                        noResults: function() {
+                            return "Aucune commune trouvée";
+                        },
+                        searching: function() {
+                            return "Recherche en cours...";
+                        }
+                    },
+                    matcher: function(params, data) {
+                        // Si pas de recherche, afficher tout
+                        if ($.trim(params.term) === '') {
+                            return data;
+                        }
+                        
+                        // Recherche uniquement au début du texte (insensible à la casse)
+                        if (data.text.toUpperCase().indexOf(params.term.toUpperCase()) === 0) {
+                            return data;
+                        }
+                        
+                        return null;
+                    }
+                });
+                
+                $('#filterCodeInsee').select2({
+                    theme: 'bootstrap-5',
+                    placeholder: 'Rechercher un code INSEE ou département...',
+                    allowClear: true,
+                    dropdownParent: $('#filterModal'),
+                    width: '100%',
+                    language: {
+                        noResults: function() {
+                            return "Aucun code trouvé";
+                        },
+                        searching: function() {
+                            return "Recherche en cours...";
+                        }
+                    },
+                    matcher: function(params, data) {
+                        // Si pas de recherche, afficher tout
+                        if ($.trim(params.term) === '') {
+                            return data;
+                        }
+                        
+                        // Si c'est un groupe (optgroup)
+                        if (data.children) {
+                            // Filtrer les enfants du groupe
+                            var filteredChildren = [];
+                            $.each(data.children, function(idx, child) {
+                                // Toujours inclure l'option "Tout le département" si elle correspond au terme de recherche
+                                if (child.id && child.id.indexOf('dept:') === 0) {
+                                    // Extraire le code département de l'ID (ex: "dept:75" -> "75")
+                                    var deptCode = child.id.substring(5);
+                                    if (deptCode.indexOf(params.term) === 0) {
+                                        filteredChildren.push(child);
+                                    }
+                                }
+                                // Recherche au début du texte pour les autres options
+                                else if (child.text.indexOf(params.term) === 0) {
+                                    filteredChildren.push(child);
+                                }
+                            });
+                            
+                            // Si des enfants correspondent, retourner le groupe avec ces enfants
+                            if (filteredChildren.length > 0) {
+                                var modifiedData = $.extend({}, data, true);
+                                modifiedData.children = filteredChildren;
+                                return modifiedData;
+                            }
+                            return null;
+                        }
+                        
+                        // Si c'est une option simple, recherche au début du texte
+                        if (data.text.indexOf(params.term) === 0) {
+                            return data;
+                        }
+                        
+                        return null;
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

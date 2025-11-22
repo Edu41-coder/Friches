@@ -1,0 +1,1165 @@
+================================================================================
+                    SYNTHÈSE DISCOVERY - APPLICATION FRICHES
+                   Analyse des problématiques et axes d'amélioration
+================================================================================
+
+Date : 22 novembre 2025
+Portée : Synthèse phase Discovery (diagnostics utilisateurs, besoins terrain)
+Objectif : Identifier les problématiques clés et définir les axes d'amélioration
+
+
+================================================================================
+                        I. INTRODUCTION - CONTEXTE DISCOVERY
+================================================================================
+
+La phase Discovery a permis d'identifier les problématiques majeures rencontrées
+par les utilisateurs de Cartofriches et plus généralement dans la gestion des
+données friches en France.
+
+Cette synthèse consolide :
+• Les problématiques terrain remontées par collectivités et opérateurs
+• Les limitations actuelles de Cartofriches (plateforme de référence)
+• Les besoins exprimés pour amélioration de l'écosystème
+• Les axes d'amélioration prioritaires
+
+L'analyse s'articule autour de 4 grands axes :
+1. DONNÉES : Qualité & Couverture
+2. EXPLOITABILITÉ : Lisibilité & Utilisation
+3. INTEROPÉRABILITÉ : Circulation de l'information
+4. PILOTAGE ZAN : Vision stratégique Zéro Artificialisation Nette
+
+
+================================================================================
+              II. AXE 1 - DONNÉES : QUALITÉ & COUVERTURE
+================================================================================
+
+PROBLÉMATIQUE GÉNÉRALE
+----------------------
+Les données friches en France sont actuellement hétérogènes, incomplètes et
+insuffisamment mises à jour, ce qui limite leur exploitation opérationnelle
+et la comparabilité nationale.
+
+
+A. PROBLÉMATIQUE 1 - HÉTÉROGÉNÉITÉ TERRITORIALE
+------------------------------------------------
+
+CONSTAT
+Les données sont hétérogènes selon les territoires, ce qui réduit la
+comparabilité nationale.
+
+DÉTAILS
+• Variabilité qualité données entre régions/départements
+• Méthodologies de recensement différentes selon collectivités
+• Critères d'identification friches non uniformes
+• Champs renseignés variables (complétude inégale)
+• Niveaux de détail disparates (fiches complètes vs partielles)
+
+IMPACT
+✗ Impossible de comparer territoires entre eux
+✗ Agrégations nationales peu fiables
+✗ Analyses statistiques biaisées
+✗ Politiques publiques fondées sur données non comparables
+
+EXEMPLES TERRAIN
+• Région A : 90% friches avec pollution sol renseignée
+• Région B : 30% friches avec pollution sol renseignée
+→ Impossible de comparer niveaux pollution régionaux
+
+• Département X : Surface minimale 1000 m² pour qualifier friche
+• Département Y : Surface minimale 5000 m²
+→ Statistiques nombre friches non comparables
+
+
+B. PROBLÉMATIQUE 2 - INCOMPLÉTUDE DES DONNÉES
+----------------------------------------------
+
+CONSTAT
+Les informations essentielles (état réel, disponibilité, risques) sont
+souvent manquantes ou incomplètes.
+
+CHAMPS CRITIQUES MANQUANTS
+• État réel du site (occupation actuelle, état bâtiments)
+• Disponibilité foncière (propriétaire identifié, volonté cession)
+• Risques pollution (diagnostics sol/bâtiments absents)
+• Statut juridique (procédures en cours, servitudes)
+• Accès et viabilisation (réseaux, voiries)
+• Potentiel de reconversion (contraintes, opportunités)
+
+TAUX DE COMPLÉTUDE OBSERVÉS (ESTIMATION)
+• Localisation (lat/lon) : ~85%
+• Type de friche : ~75%
+• Surface : ~70%
+• Pollution sol : ~40%
+• Pollution bâtiments : ~35%
+• Propriétaire : ~50%
+• Date identification : ~60%
+• Statut projet : ~30%
+
+IMPACT
+✗ Priorisation difficile (données clés manquantes)
+✗ Évaluation potentiel requalification impossible
+✗ Décisions basées sur informations partielles
+✗ Mobilisation friches freinée (méconnaissance)
+
+CAUSES
+• Collecte données chronophage (moyens limités)
+• Accès informations difficile (propriétaires privés)
+• Diagnostics pollution coûteux (non systématiques)
+• Pas d'obligation exhaustivité (contribution volontaire)
+
+
+C. PROBLÉMATIQUE 3 - MISES À JOUR IRRÉGULIÈRES
+-----------------------------------------------
+
+CONSTAT
+Les mises à jour sont irrégulières, ce qui limite la fiabilité du registre.
+
+FRÉQUENCE MISES À JOUR CONSTATÉE
+• Cartofriches national : Variable selon régions
+• Certaines régions : 1 fois/an
+• D'autres régions : Aucune mise à jour depuis >2 ans
+• Projets requalification : Rarement actualisés (statuts figés)
+
+PROBLÈMES IDENTIFIÉS
+• Friches disparues (requalifiées) toujours présentes dans base
+• Nouveaux sites non ajoutés faute de processus systématique
+• Évolution statuts non suivie (en friche → en projet → requalifié)
+• Données obsolètes (propriétaires changés, surfaces modifiées)
+• Pas d'historique (impossible de suivre évolution temporelle)
+
+IMPACT
+✗ Perte de confiance utilisateurs (données périmées)
+✗ Prospections terrain infructueuses (sites disparus)
+✗ Stock friches surestimé (incluant sites requalifiés)
+✗ Dynamique territoriale invisible (pas de suivi évolution)
+
+CAUSES
+• Pas de workflow automatisé mise à jour
+• Ressources humaines limitées (collectivités)
+• Pas d'alerte automatique changement (ex: permis construire déposé)
+• Contribution volontaire (pas d'obligation mise à jour)
+
+
+SYNTHÈSE AXE 1 - RECOMMANDATIONS
+---------------------------------
+
+STANDARDISATION
+→ Définir gabarit national obligatoire (champs minimum)
+→ Dictionnaire de données unique (CNIG amélioré)
+→ Méthodologie recensement harmonisée (guide national)
+
+COMPLÉTUDE
+→ Champs obligatoires vs facultatifs clairement définis
+→ Campagnes incitatives complétude (accompagnement collectivités)
+→ Croisement automatique bases externes (BASIAS, BASOL, SIRENE)
+
+FRAÎCHEUR
+→ Workflow mises à jour automatisé (alertes)
+→ Connecteurs Sit@del (détection projets requalification)
+→ Dashboard qualité par territoire (complétude, fraîcheur)
+→ Obligations mise à jour annuelle minimum
+
+CONTRIBUTION COLLABORATIVE
+→ Système de rôles et permissions granulaires (admin, contributeur, lecteur)
+→ Interface de saisie/modification simplifiée pour utilisateurs autorisés
+→ Workflow validation multi-niveaux (contributeur → valideur → publication)
+→ Historique complet des modifications (qui, quand, quoi - audit trail)
+→ Système de révision/rollback (annulation modifications erronées)
+→ Notifications automatiques aux référents territoriaux (nouvelles saisies)
+→ Gamification contribution (badges, statistiques contributeurs actifs)
+→ Module import/export facilité (templates Excel/CSV pré-remplis)
+
+GESTION DES DROITS (IMPLÉMENTÉE DANS APPLICATION FRICHES)
+• Administrateur (admin) :
+  - CRUD complet sur toutes les friches (Create, Read, Update, Delete)
+  - Gestion des utilisateurs et permissions
+  - Validation/publication des contributions
+  - Accès dashboard qualité données et monitoring
+  - Exports complets base de données
+
+• Contributeur territorial (contributor) :
+  - Création de nouvelles friches sur son territoire
+  - Modification friches de son territoire (périmètre EPCI/Département)
+  - Soumission pour validation (workflow modération)
+  - Accès lecture seule autres territoires
+  - Exports limités à son périmètre
+
+• Utilisateur standard (user) :
+  - Lecture seule toutes les friches
+  - Consultation analytics et carte
+  - Exports statistiques (pas de données brutes complètes)
+  - Signalement anomalies (workflow correction)
+
+WORKFLOW CONTRIBUTION COLLABORATIVE RECOMMANDÉ
+1. Contributeur saisit/modifie friche sur son territoire
+2. Système valide automatiquement qualité données (champs obligatoires, 
+   coordonnées valides, cohérence)
+3. Si validation auto OK → Statut "En attente validation"
+4. Notification envoyée au référent territorial (valideur)
+5. Valideur vérifie données et publie OU demande corrections
+6. Si publié → Friche visible publiquement + historique conservé
+7. Notification retour au contributeur (accepté/refusé avec commentaires)
+
+AVANTAGES APPROCHE COLLABORATIVE
+✓ Complétude accélérée (multiplication contributeurs locaux)
+✓ Fraîcheur améliorée (acteurs terrain actualisent directement)
+✓ Qualité maintenue (validation par référents + contrôles auto)
+✓ Responsabilisation acteurs locaux (ownership territorial)
+✓ Réduction charge équipe centrale (décentralisation saisie)
+✓ Connaissance terrain valorisée (experts locaux contributeurs)
+✓ Communauté active (engagement, échanges bonnes pratiques)
+
+
+================================================================================
+          III. AXE 2 - EXPLOITABILITÉ : LISIBILITÉ & UTILISATION
+================================================================================
+
+PROBLÉMATIQUE GÉNÉRALE
+----------------------
+L'interface actuelle Cartofriches et le manque d'outils d'aide à la décision
+limitent l'exploitation opérationnelle des données par les collectivités et
+opérateurs.
+
+
+A. PROBLÉMATIQUE 4 - INTERFACE PEU ADAPTÉE
+-------------------------------------------
+
+CONSTAT
+L'interface actuelle reste peu adaptée aux parcours opérationnels des
+collectivités (filtres limités, fiche friche peu normalisée).
+
+LIMITATIONS IDENTIFIÉES
+
+1. FILTRES LIMITÉS
+   • Pas de filtres combinés multicritères
+   • Recherche géographique basique (commune uniquement)
+   • Pas de filtres avancés (surface min/max, pollution, statut)
+   • Pas de filtre par département/région (seulement commune)
+   • Pas de sauvegarde filtres favoris
+
+2. FICHE FRICHE PEU NORMALISÉE
+   • Structure variable selon saisie utilisateur
+   • Champs texte libre non structurés (difficile à exploiter)
+   • Absence sections standardisées (localisation, caractéristiques,
+     pollution, projet, contact)
+   • Pas de photos/documents attachés systématiques
+   • Informations critiques noyées dans texte libre
+
+3. ERGONOMIE LIMITÉE
+   • Navigation peu intuitive (menu complexe)
+   • Temps de chargement carte parfois long
+   • Pas de synchronisation tableau ↔ carte
+   • Pas de tri colonnes dans résultats
+   • Pas de pagination côté serveur (chargement complet)
+
+4. VISUALISATION CARTE
+   • Clustering basique (moins performant zones denses)
+   • Popups peu informatives (données minimales)
+   • Pas de sélection zone géographique (rectangle, polygone)
+   • Pas de fond de carte alternatif (OSM uniquement)
+   • Pas de mesure distance/surface
+
+IMPACT
+✗ Recherche friches longue et fastidieuse
+✗ Comparaison friches difficile (pas de tableau)
+✗ Identification opportunités complexe (filtres limités)
+✗ Exploitation opérationnelle freinée
+
+RETOURS UTILISATEURS (VERBATIM)
+• "Je dois ouvrir chaque fiche une par une pour trouver ce que je cherche"
+• "Impossible de filtrer par surface >5000 m² et pollution absente"
+• "La fiche friche est un champ texte libre, difficile à exploiter"
+• "Je ne peux pas exporter la liste des friches avec mes critères"
+
+
+B. PROBLÉMATIQUE 5 - PRIORISATION DIFFICILE
+--------------------------------------------
+
+CONSTAT
+Les collectivités peinent à prioriser les friches à fort potentiel faute
+d'outils d'aide à la décision.
+
+BESOINS EXPRIMÉS
+
+1. SCORING MULTI-CRITÈRES
+   Critères souhaités pour scoring :
+   • Enjeu stratégique (localisation, desserte transports)
+   • Potentiel réaménagement (surface, configuration, accès)
+   • Risques (pollution, amiante, état bâtiments)
+   • Coûts estimés (dépollution, démolition, viabilisation)
+   • Opportunité marché (tension foncière locale)
+   • Impact ZAN (contribution objectif zéro artificialisation)
+
+2. INDICATEURS SYNTHÉTIQUES
+   • Score global 0-100 (facilité/opportunité requalification)
+   • Catégories (A: priorité haute, B: moyenne, C: faible)
+   • Feux tricolores (vert: facile, orange: moyen, rouge: difficile)
+   • Comparaison visuelle (radar chart critères)
+
+3. SIMULATIONS
+   • Coût estimé projet requalification
+   • Délai prévisionnel (selon procédures)
+   • Aides mobilisables (Fonds Friches, ADEME, etc.)
+   • Impact emploi/logements créés
+
+MANQUES ACTUELS
+✗ Aucun scoring disponible (toutes friches = même niveau)
+✗ Pas d'indicateurs synthétiques (lecture fastidieuse fiches)
+✗ Pas de comparaison facilitée (impossibilité de benchmarker)
+✗ Décisions basées sur "intuition" et connaissance locale uniquement
+
+IMPACT
+✗ Priorisation arbitraire ou basée sur critères non objectifs
+✗ Opportunités manquées (friches faciles non identifiées)
+✗ Projets abandonnés (difficultés sous-estimées)
+✗ Mobilisation budgets sous-optimale
+
+
+C. PROBLÉMATIQUE 6 - MANQUE DE SYNTHÈSE
+----------------------------------------
+
+CONSTAT
+Les utilisateurs manquent d'informations synthétiques pour prendre des
+décisions rapides (résumés, scoring, comparaisons).
+
+BESOINS ANALYTICS
+
+1. STATISTIQUES TERRITOIRE
+   • Nombre total friches
+   • Surface totale disponible
+   • Répartition par type (industriel, commercial, habitat, etc.)
+   • Répartition par statut (en friche, en projet, requalifié)
+   • Top 10 communes plus touchées
+   • Évolution temporelle (si historique disponible)
+
+2. INDICATEURS POLLUTION
+   • % friches avec pollution sol avérée/suspectée
+   • % friches avec amiante/plomb bâtiments
+   • Cartographie risques pollution (hotspots)
+   • Coûts dépollution estimés (agrégés)
+
+3. POTENTIEL MOBILISABLE
+   • Surface foncière mobilisable court terme (<2 ans)
+   • Surface moyenne terme (2-5 ans)
+   • Estimation logements constructibles (reconversion résidentielle)
+   • Estimation emplois potentiels (zones activités)
+
+4. TABLEAUX DE BORD
+   • Dashboard stratégique (KPI région/département)
+   • Suivi dynamique (friches entrées/sorties stock)
+   • Monitoring projets (avancement requalifications)
+   • Comparaisons territoriales (benchmarking régions)
+
+MANQUES ACTUELS
+✗ Pas d'analytics disponibles (seulement consultation fiches)
+✗ Pas de graphiques/visualisations (données brutes uniquement)
+✗ Pas d'exports statistiques (impossibilité d'exploiter agrégats)
+✗ Chaque utilisateur doit refaire ses propres stats (duplication travail)
+
+IMPACT
+✗ Décisions stratégiques difficiles (manque vision d'ensemble)
+✗ Communication/sensibilisation limitée (pas de chiffres clés)
+✗ Pilotage politiques publiques contraint
+✗ Rapports/études chronophages (collecte manuelle données)
+
+
+SYNTHÈSE AXE 2 - RECOMMANDATIONS
+---------------------------------
+
+INTERFACE AMÉLIORÉE
+→ Filtres multicritères avancés (combinables)
+→ Fiche friche standardisée (sections normalisées)
+→ Tableau interactif (tri, colonnes sélectionnables, exports)
+→ Synchronisation tableau ↔ carte temps réel
+
+AIDE DÉCISION
+→ Module scoring multi-critères (pondérations personnalisables)
+→ Indicateurs synthétiques visuels (scores, catégories, feux)
+→ Comparateur friches (tableau comparatif multi-critères)
+→ Simulations coûts/délais (calculateurs intégrés)
+
+ANALYTICS
+→ Dashboard statistiques territoire (KPI clés)
+→ Graphiques interactifs (Chart.js, drill-down)
+→ Exports multiformats (CSV, Excel, PDF)
+→ Rapports automatisés (génération one-click)
+
+
+================================================================================
+      IV. AXE 3 - INTEROPÉRABILITÉ : CIRCULATION DE L'INFORMATION
+================================================================================
+
+PROBLÉMATIQUE GÉNÉRALE
+----------------------
+L'intégration de Cartofriches dans les systèmes d'information locaux est
+complexe et les données ne sont pas toujours alignées sur géostandard,
+ce qui freine les échanges et l'automatisation.
+
+
+A. PROBLÉMATIQUE 7 - INTÉGRATION SIG COMPLEXE
+----------------------------------------------
+
+CONSTAT
+L'intégration et la récupération des données dans les SIG locaux sont
+complexes.
+
+DIFFICULTÉS IDENTIFIÉES
+
+1. FORMATS D'ÉCHANGE LIMITÉS
+   • Export CSV basique (pas de structure relationnelle)
+   • Pas d'export GeoJSON/GeoPackage natif optimisé
+   • Pas d'export Shapefile (SIG desktop)
+   • Pas de flux WMS/WFS automatique (services OGC)
+
+2. API LIMITÉE
+   • API existante mais documentation limitée
+   • Pas de pagination API (retour complet ou rien)
+   • Pas d'authentification (impossible quotas/monitoring)
+   • Pas de versioning API (risque rupture compatibilité)
+   • Formats retour limités (JSON uniquement)
+
+3. INTÉGRATION SIG COLLECTIVITÉS
+   • Import manuel dans SIG local (chronophage)
+   • Pas de connecteurs QGIS/ArcGIS (plugins)
+   • Synchronisation manuelle (pas de mise à jour auto)
+   • Transformation données nécessaire (re-projection, nettoyage)
+
+4. INTEROPÉRABILITÉ URBANSIMUL
+   • Intégration UrbanSIMUL partielle (pas fluide)
+   • Données non synchronisées temps réel
+   • Formats intermédiaires nécessaires (conversions)
+
+IMPACT
+✗ Ressources techniques mobilisées (imports manuels répétitifs)
+✗ Risque erreurs (manipulation données multiples)
+✗ Données dupliquées/désynchronisées (SIG local ≠ Cartofriches)
+✗ Découragement utilisateurs (complexité technique)
+
+RETOURS UTILISATEURS
+• "Il faut un expert SIG pour intégrer les données dans notre système"
+• "Je dois réimporter manuellement chaque trimestre, c'est chronophage"
+• "Les coordonnées ne sont pas toujours dans la bonne projection"
+• "Impossible d'automatiser, je dois passer par CSV et manipulations manuelles"
+
+
+B. PROBLÉMATIQUE 8 - ALIGNEMENT GÉOSTANDARD PARTIEL
+----------------------------------------------------
+
+CONSTAT
+Les données ne sont pas toujours parfaitement alignées sur le géostandard,
+ce qui freine l'échange.
+
+ÉCARTS GÉOSTANDARD CNIG CONSTATÉS
+
+1. STRUCTURE DONNÉES
+   • Champs obligatoires CNIG parfois absents
+   • Nomenclatures non respectées (valeurs hors liste)
+   • Types de données incohérents (texte vs énumération)
+   • Relations entre tables manquantes (pas de clés étrangères)
+
+2. QUALITÉ GÉOGRAPHIQUE
+   • Coordonnées parfois hors France métropolitaine (aberrations)
+   • Projection variable (WGS84 vs Lambert93 vs autre)
+   • Précision géolocalisation hétérogène (adresse vs centroïde commune)
+   • Géométries invalides (points, pas de polygones parcelles)
+
+3. MÉTADONNÉES INCOMPLÈTES
+   • Date création/modification manquantes
+   • Auteur/organisme source non renseigné
+   • Licence données absente (droits réutilisation flous)
+   • Méthode collecte non documentée
+
+4. IDENTIFIANTS
+   • Pas d'identifiant unique pérenne (ID changent)
+   • Pas d'UUID (risque collision imports multiples)
+   • Pas de lien vers autres bases (BASIAS, BASOL, SIRENE)
+
+IMPACT
+✗ Interopérabilité limitée avec autres systèmes
+✗ Agrégations nationales difficiles (nettoyage préalable requis)
+✗ Croisements bases externes complexes (pas d'identifiants communs)
+✗ Non-conformité géostandard national (perte standardisation)
+
+EXEMPLE PROBLÈME
+• Friche A : type_friche = "Industrielle"
+• Friche B : type_friche = "Industrie"
+• Friche C : type_friche = "Site industriel désaffecté"
+→ 3 valeurs différentes pour même concept (nomenclature non respectée)
+
+
+C. PROBLÉMATIQUE 9 - ABSENCE D'AUTOMATISATION
+----------------------------------------------
+
+CONSTAT
+L'absence d'automatisation (détection de friches, suivi temporel, alertes)
+limite l'actualisation et la réactivité.
+
+OPPORTUNITÉS AUTOMATISATION NON EXPLOITÉES
+
+1. DÉTECTION AUTOMATIQUE FRICHES
+   • Croisement BASIAS + SIRENE (entreprises fermées)
+   • Croisement cadastre + images satellites (évolution occupation sol)
+   • Analyse Street View (bâtiments dégradés, végétation envahissante)
+   • Machine learning (identification patterns friches)
+   
+   → Actuellement : recensement 100% manuel (chronophage, incomplet)
+
+2. SUIVI TEMPOREL AUTOMATISÉ
+   • Monitoring évolution friches (images satellites périodiques)
+   • Détection chantiers (début travaux requalification)
+   • Alerte changement (démolition, construction)
+   
+   → Actuellement : suivi manuel ponctuel (friches figées)
+
+3. ALERTES AUTOMATIQUES
+   • Notification permis construire déposé (Sit@del)
+   • Alerte changement propriétaire (cadastre)
+   • Signal pollution découverte (BASOL)
+   • Alerte projet requalification annoncé (presse, délibérations)
+   
+   → Actuellement : aucune alerte (découverte fortuite)
+
+4. ENRICHISSEMENT AUTOMATIQUE
+   • Import automatique données BASIAS/BASOL (pollution)
+   • Géocodage automatique adresses (BAN)
+   • Calcul surface automatique (cadastre)
+   • Enrichissement contexte (transports, équipements proches)
+   
+   → Actuellement : saisie manuelle (incomplet, chronophage)
+
+IMPACT
+✗ Données obsolètes rapidement (pas de suivi continu)
+✗ Opportunités manquées (projets non détectés à temps)
+✗ Ressources humaines monopolisées (tâches répétitives)
+✗ Exhaustivité limitée (impossibilité de tout suivre manuellement)
+
+BÉNÉFICES AUTOMATISATION
+✓ Fraîcheur données garantie (mises à jour continues)
+✓ Réactivité accrue (alertes temps réel)
+✓ Exhaustivité améliorée (détection systématique)
+✓ Ressources humaines libérées (focus analyse/décision)
+
+
+SYNTHÈSE AXE 3 - RECOMMANDATIONS
+---------------------------------
+
+INTÉGRATION SIG FACILITÉE
+→ API REST robuste (pagination, authentification, versioning)
+→ Exports multiformats (GeoJSON, GeoPackage, Shapefile, WMS/WFS)
+→ Plugins QGIS/ArcGIS (connecteurs natifs)
+→ Documentation API complète (OpenAPI/Swagger)
+
+CONFORMITÉ GÉOSTANDARD
+→ Validation automatique CNIG (import/export)
+→ Nomenclatures contrôlées (listes valeurs normalisées)
+→ Identifiants UUID pérennes (traçabilité)
+→ Métadonnées complètes obligatoires (ISO 19115)
+
+AUTOMATISATION
+→ Connecteurs automatiques (Sit@del, BASIAS, BASOL, SIRENE)
+→ Détection changements (monitoring satellites, cadastre)
+→ Alertes configurable (notifications utilisateurs)
+→ Enrichissement automatique (croisement bases, géocodage)
+
+
+================================================================================
+          V. AXE 4 - PILOTAGE ZAN : VISION STRATÉGIQUE
+================================================================================
+
+PROBLÉMATIQUE GÉNÉRALE
+----------------------
+Les données actuelles ne permettent pas de suivre finement le stock de
+friches et sa dynamique, ni de mesurer l'impact des reconversions sur
+l'objectif Zéro Artificialisation Nette. L'outil ne permet pas de
+capitaliser sur les retours d'expérience (REX) des projets réussis.
+
+
+A. PROBLÉMATIQUE 10 - SUIVI STOCK ET DYNAMIQUE
+-----------------------------------------------
+
+CONSTAT
+Les données actuelles ne permettent pas de suivre finement le stock de
+friches et sa dynamique.
+
+MANQUES IDENTIFIÉS
+
+1. VISION STATIQUE (PAS DE TEMPORALITÉ)
+   • Base = photographie instant T (pas d'historique)
+   • Impossible de savoir si stock augmente/diminue
+   • Évolution friches individuelles non tracée
+   • Pas de série temporelle (courbes évolution)
+
+2. FLUX NON MESURÉS
+   • Flux entrants : combien de nouvelles friches/an ? (non mesuré)
+   • Flux sortants : combien de requalifications/an ? (non mesuré)
+   • Friches "dormantes" : durée moyenne état friche ? (inconnue)
+   • Taux rotation : vitesse mobilisation friches ? (non calculé)
+
+3. INDICATEURS DYNAMIQUES ABSENTS
+   • Stock net friches (entrées - sorties)
+   • Variation annuelle stock (+X% ou -X%)
+   • Durée moyenne avant requalification
+   • Taux de succès projets (projets lancés / projets aboutis)
+   • Vélocité territoriale (territoires dynamiques vs atones)
+
+4. SEGMENTATION MANQUANTE
+   • Friches "mobilisables court terme" (<2 ans)
+   • Friches "mobilisables moyen terme" (2-5 ans)
+   • Friches "complexes" (>5 ans, pollution lourde)
+   • Friches "gelées" (contentieux, indivision, orphelines)
+
+IMPACT
+✗ Impossible de mesurer efficacité politiques publiques
+✗ Pilotage ZAN "aveugle" (pas d'indicateurs suivi)
+✗ Ajustement stratégies impossible (manque retours)
+✗ Communication limitée (pas de chiffres évolution)
+
+BESOINS EXPRIMÉS
+• "Combien de friches requalifiées en 2024 dans ma région ?"
+• "Est-ce que le stock de friches augmente ou diminue ?"
+• "Quel est le délai moyen entre identification et requalification ?"
+• "Quels territoires sont les plus dynamiques en reconversion ?"
+
+
+B. PROBLÉMATIQUE 11 - MESURE IMPACT RECONVERSIONS
+--------------------------------------------------
+
+CONSTAT
+Il est difficile de mesurer l'impact des reconversions (avant/après, projets
+réussis).
+
+DONNÉES IMPACT MANQUANTES
+
+1. AVANT / APRÈS (TRANSFORMATION)
+   • État initial friche (photos, description, surface)
+   • État final après requalification (usage, constructions)
+   • Surface artificialisée évitée (contribution ZAN)
+   • Comparaison visuelle (photos avant/après)
+
+2. IMPACTS QUANTITATIFS
+   • Logements créés (nombre, types)
+   • Emplois créés ou préservés (nombre, secteurs)
+   • Équipements publics créés (écoles, crèches, etc.)
+   • Espaces verts aménagés (surface)
+   • Surface désartificialisée (végétalisation)
+
+3. IMPACTS ÉCONOMIQUES
+   • Investissement total projet (€)
+   • Aides publiques mobilisées (Fonds Friches, ADEME, etc.)
+   • Retour sur investissement (bénéfices - coûts)
+   • Fiscalité générée (taxes foncières, CVAE)
+   • Valorisation foncière quartier (effet d'entraînement)
+
+4. IMPACTS SOCIAUX & ENVIRONNEMENTAUX
+   • Amélioration cadre de vie (satisfaction riverains)
+   • Dépollution réalisée (volumes sols traités)
+   • Réduction émissions CO2 (vs construction neuve)
+   • Préservation biodiversité (espaces naturels préservés ailleurs)
+
+MANQUES ACTUELS
+✗ Friches requalifiées disparaissent de la base (pas de traçabilité)
+✗ Projets aboutis non documentés (pas de fiche bilan)
+✗ Impacts non mesurés (pas de KPI post-projet)
+✗ Impossible de quantifier contribution ZAN (surface évitée non calculée)
+
+IMPACT
+✗ Valorisation insuffisante réussites (effet vitrine perdu)
+✗ Retour expérience impossible (projets similaires ne bénéficient pas)
+✗ Communication/sensibilisation limitée (manque d'exemples concrets)
+✗ Justification budgets difficile (pas de preuve impact)
+
+BESOINS EXPRIMÉS
+• "Montrer les success stories pour mobiliser élus et citoyens"
+• "Quantifier contribution friches à l'objectif ZAN de mon territoire"
+• "Démontrer l'efficacité des aides publiques (logements/emplois créés)"
+• "Capitaliser sur projets réussis pour reproduire ailleurs"
+
+
+C. PROBLÉMATIQUE 12 - ABSENCE CAPITALISATION REX
+-------------------------------------------------
+
+CONSTAT
+L'outil ne permet pas aujourd'hui de capitaliser sur les retours
+d'expérience des projets requalifiés.
+
+CAPITALISATION ABSENTE
+
+1. BASE DE CONNAISSANCES REX
+   • Pas de bibliothèque projets réalisés (catalogue success stories)
+   • Pas de fiches REX standardisées (méthodologie, coûts, délais, difficultés)
+   • Pas de photos/vidéos projets (avant/après, chantier)
+   • Pas de contacts porteurs projets (impossibilité d'échanger)
+
+2. FILTRES/RECHERCHE REX
+   • Impossible de rechercher projets similaires (même type, même taille)
+   • Pas de filtres par usage final (logement, activité, équipement, mixte)
+   • Pas de filtres par montage financier (aides mobilisées)
+   • Pas de filtres par difficulté (pollution, complexité foncière)
+
+3. APPRENTISSAGE & BENCHMARK
+   • Pas de comparaison projets (coûts au m², délais moyens)
+   • Pas d'identification bonnes pratiques (facteurs de succès)
+   • Pas d'alerte difficultés récurrentes (écueils à éviter)
+   • Pas de mise en réseau porteurs projets (communauté)
+
+4. OUTILS AIDE DÉCISION REX
+   • Pas de simulateur coûts basé sur REX (estimation projet)
+   • Pas de calculateur délais moyen selon complexité
+   • Pas de recommandations automatiques (projets similaires réussis)
+   • Pas de mise en relation experts (qui a déjà fait ça ?)
+
+MANQUES ACTUELS
+✗ Chaque projet repart de zéro (pas de capitalisation)
+✗ Erreurs répétées (mêmes difficultés rencontrées)
+✗ Sous-exploitation expériences (projets réussis non diffusés)
+✗ Isolement porteurs projets (pas de réseau/entraide)
+
+IMPACT
+✗ Délais projets allongés (courbe apprentissage répétée)
+✗ Coûts augmentés (erreurs évitables)
+✗ Taux échec élevé (difficultés sous-estimées)
+✗ Démobilisation acteurs (sentiment solitude)
+
+BÉNÉFICES CAPITALISATION REX
+✓ Accélération projets (benchmarks, bonnes pratiques)
+✓ Réduction coûts (éviter erreurs passées)
+✓ Taux succès accru (facteurs succès identifiés)
+✓ Mobilisation acteurs (success stories inspirantes)
+✓ Réseau acteurs (entraide, partage expériences)
+
+
+SYNTHÈSE AXE 4 - RECOMMANDATIONS
+---------------------------------
+
+SUIVI DYNAMIQUE STOCK
+→ Historisation données (tracking évolution friches)
+→ Indicateurs flux (entrées/sorties stock annuelles)
+→ Tableaux de bord dynamiques (courbes évolution)
+→ Segmentation stock (mobilisable court/moyen/long terme)
+
+MESURE IMPACT ZAN
+→ Module impact (calcul surface artificialisée évitée)
+→ Fiches bilan projets (avant/après, indicateurs)
+→ KPI quantitatifs (logements, emplois, investissements)
+→ Contribution territoriale ZAN (monitoring objectifs)
+
+CAPITALISATION REX
+→ Bibliothèque projets réalisés (fiches REX standardisées)
+→ Moteur recherche projets similaires (filtres avancés)
+→ Simulateurs basés REX (coûts, délais estimés)
+→ Réseau porteurs projets (mise en relation, échanges)
+
+
+================================================================================
+              VI. SYNTHÈSE GLOBALE - VUE D'ENSEMBLE PROBLÉMATIQUES
+================================================================================
+
+CARTOGRAPHIE DES 12 PROBLÉMATIQUES PAR AXE
+-------------------------------------------
+
+AXE 1 : DONNÉES (Qualité & Couverture)
+  Problématique 1 : Hétérogénéité territoriale
+  Problématique 2 : Incomplétude des données
+  Problématique 3 : Mises à jour irrégulières
+
+AXE 2 : EXPLOITABILITÉ (Lisibilité & Utilisation)
+  Problématique 4 : Interface peu adaptée
+  Problématique 5 : Priorisation difficile
+  Problématique 6 : Manque de synthèse
+
+AXE 3 : INTEROPÉRABILITÉ (Circulation de l'information)
+  Problématique 7 : Intégration SIG complexe
+  Problématique 8 : Alignement géostandard partiel
+  Problématique 9 : Absence d'automatisation
+
+AXE 4 : PILOTAGE ZAN (Vision stratégique)
+  Problématique 10 : Suivi stock et dynamique
+  Problématique 11 : Mesure impact reconversions
+  Problématique 12 : Absence capitalisation REX
+
+
+MATRICE CRITICITÉ / COMPLEXITÉ
+-------------------------------
+
+HAUTE CRITICITÉ / FAIBLE COMPLEXITÉ (Quick Wins - Priorité 1)
+• Problématique 4 : Interface peu adaptée
+  → Action : Refonte UI/UX, filtres avancés, tableau interactif
+  
+• Problématique 6 : Manque de synthèse
+  → Action : Dashboard analytics, graphiques Chart.js
+
+• Problématique 3 : Mises à jour irrégulières
+  → Action : Workflow mises à jour, alertes automatiques
+
+HAUTE CRITICITÉ / MOYENNE COMPLEXITÉ (Priorité 2)
+• Problématique 1 : Hétérogénéité territoriale
+  → Action : Gabarit national, dictionnaire données, guide méthodologique
+
+• Problématique 7 : Intégration SIG complexe
+  → Action : API REST robuste, exports multiformats, plugins
+
+• Problématique 2 : Incomplétude des données
+  → Action : Champs obligatoires, croisements automatiques bases externes
+
+HAUTE CRITICITÉ / HAUTE COMPLEXITÉ (Priorité 3 - Long terme)
+• Problématique 9 : Absence d'automatisation
+  → Action : Connecteurs Sit@del/BASIAS/BASOL, détection satellite, ML
+
+• Problématique 5 : Priorisation difficile
+  → Action : Module scoring multi-critères, simulations
+
+• Problématique 10 : Suivi stock et dynamique
+  → Action : Historisation, indicateurs flux, dashboards dynamiques
+
+MOYENNE CRITICITÉ / COMPLEXITÉ VARIABLE (Priorité 4)
+• Problématique 8 : Alignement géostandard partiel
+  → Action : Validation CNIG automatique, métadonnées complètes
+
+• Problématique 11 : Mesure impact reconversions
+  → Action : Module impact ZAN, fiches bilan, KPI
+
+• Problématique 12 : Absence capitalisation REX
+  → Action : Bibliothèque REX, moteur recherche, simulateurs
+
+
+================================================================================
+              VII. RECOMMANDATIONS PRIORITAIRES PAR PHASE
+================================================================================
+
+PHASE 1 - QUICK WINS (0-6 MOIS) - MVP AMÉLIORÉ
+-----------------------------------------------
+
+OBJECTIF : Améliorer exploitabilité immédiate et expérience utilisateur
+
+Actions prioritaires :
+✓ Refonte interface (filtres multicritères, tableau interactif)
+✓ Dashboard analytics (statistiques territoire, graphiques)
+✓ Fiche friche standardisée (sections normalisées)
+✓ Exports améliorés (CSV structuré, Excel)
+✓ Synchronisation tableau ↔ carte
+✓ Documentation utilisateur (guides, tutoriels)
+
+Technologies :
+• PHP MVC léger (actuel) ✓
+• Leaflet + MarkerCluster ✓
+• Chart.js pour analytics ✓
+• Bootstrap 5 UI ✓
+• Select2 pour filtres avancés ✓
+
+Livrables :
+→ Application Friches MVP opérationnelle
+→ 3-5 collectivités pilotes (tests utilisateurs)
+→ Retours terrain pour itération
+
+
+PHASE 2 - CONSOLIDATION (6-12 MOIS) - PLATEFORME ROBUSTE
+----------------------------------------------------------
+
+OBJECTIF : Standardiser données et industrialiser plateforme
+
+Actions prioritaires :
+□ Gabarit national + dictionnaire données (consensus CNIG)
+□ Workflow mises à jour automatisé (alertes, validations)
+□ API REST robuste (pagination, authentification, versioning)
+□ Dashboard qualité données (complétude, fraîcheur par territoire)
+□ Connecteurs automatiques phase 1 (Sit@del pour détection projets)
+□ Module scoring simple (critères de base)
+□ Déploiement production (serveur, HTTPS, monitoring)
+
+Technologies :
+• API REST structurée (routes, versioning /api/v1/)
+• Redis pour cache (endpoints JSON)
+• PostgreSQL + PostGIS (évaluation migration)
+• JWT authentification API
+• Monitoring (UptimeRobot, logs)
+
+Livrables :
+→ Plateforme production 50+ organisations
+→ API publique documentée (OpenAPI)
+→ Guide standardisation national (diffusion DREAL)
+
+
+PHASE 3 - INDUSTRIALISATION (12-24 MOIS) - PLATEFORME COMPLÈTE
+---------------------------------------------------------------
+
+OBJECTIF : Automatisation et aide décision avancée
+
+Actions prioritaires :
+□ Migration PostgreSQL + PostGIS (analyses spatiales)
+□ Connecteurs automatiques complets (BASIAS, BASOL, SIRENE, cadastre)
+□ Module scoring multi-critères avancé (pondérations personnalisables)
+□ Module impact ZAN (calcul surface évitée, contribution objectifs)
+□ Historisation complète (tracking évolution friches)
+□ Indicateurs flux (entrées/sorties stock, dynamique)
+□ Plugins QGIS/ArcGIS (intégration SIG facilitée)
+□ Validation CNIG automatique (conformité géostandard)
+
+Technologies :
+• PostgreSQL + PostGIS (requêtes spatiales)
+• Framework PHP (Laravel ou Symfony) si équipe grandit
+• Machine learning phase initiale (détection patterns)
+• ApexCharts si analytics poussés (drill-down)
+
+Livrables :
+→ Plateforme 100+ organisations actives
+→ Intégration UrbanSIMUL complète
+→ Modèle économique SaaS opérationnel
+
+
+PHASE 4 - INNOVATION (24+ MOIS) - PLATEFORME INTELLIGENTE
+----------------------------------------------------------
+
+OBJECTIF : Intelligence artificielle et capitalisation REX
+
+Actions prioritaires :
+□ Détection automatique friches (satellite + ML)
+□ Suivi temporel automatisé (monitoring évolution sites)
+□ Bibliothèque REX projets (fiches standardisées, photos, contacts)
+□ Moteur recherche projets similaires (ML, recommandations)
+□ Simulateurs avancés (coûts, délais basés REX)
+□ Module prédictif (probabilité succès requalification)
+□ Réseau social porteurs projets (échanges, entraide)
+□ Version mobile (audits terrain, signalement citoyen)
+
+Technologies :
+• Machine learning (TensorFlow, scikit-learn)
+• Imagerie satellite (Sentinel, Landsat via Google Earth Engine)
+• Apache ECharts (visualisations avancées)
+• App mobile (React Native ou Flutter)
+
+Livrables :
+→ Plateforme leader national référence
+→ Rayonnement européen (interopérabilité EU)
+→ Communauté active 500+ utilisateurs
+
+
+================================================================================
+              VIII. INDICATEURS DE SUCCÈS (KPI) PAR AXE
+================================================================================
+
+AXE 1 - DONNÉES
+---------------
+• Taux complétude moyen fiches : >80% (vs ~60% actuel)
+• Taux géolocalisation valide : >95% (coordonnées France + EPSG:4326)
+• Fraîcheur moyenne données : <6 mois (dernière mise à jour)
+• Couverture nationale : >90% communes >50k habitants
+• Conformité géostandard CNIG : >90% fiches conformes
+
+AXE 2 - EXPLOITABILITÉ
+----------------------
+• Temps recherche friche : <2 min (vs >10 min actuellement)
+• Taux utilisation filtres avancés : >60% sessions
+• Taux export données : >30% sessions (exploitation opérationnelle)
+• Satisfaction UX (NPS) : >50 (vs ~20 actuellement estimé)
+• Taux rebond : <40% (engagement)
+
+AXE 3 - INTEROPÉRABILITÉ
+------------------------
+• Taux utilisation API : >1000 requêtes/jour
+• Nombre SIG connectés : >50 collectivités (intégration native)
+• Conformité géostandard exports : 100% (validation auto)
+• Taux automatisation enrichissement : >70% données (vs 0% actuel)
+• Fréquence mises à jour automatiques : hebdomadaire minimum
+
+AXE 4 - PILOTAGE ZAN
+--------------------
+• Taux traçabilité friches : >80% (historique complet)
+• Nombre projets REX documentés : >100 (fiches complètes)
+• Surface artificialisée évitée mesurée : 100% projets (contribution ZAN)
+• Variation annuelle stock : <-5% (réduction stock friches)
+• Délai moyen requalification : <3 ans (vs >5 ans actuellement)
+
+
+================================================================================
+              IX. RISQUES & POINTS DE VIGILANCE
+================================================================================
+
+RISQUES TECHNIQUES
+------------------
+🔴 Complexité migration PostgreSQL (rupture compatibilité)
+   → Mitigation : Tests exhaustifs, migration progressive, rollback plan
+
+🔴 Performance API si ouverture publique (charge serveur)
+   → Mitigation : Cache Redis, rate limiting, CDN, load balancing
+
+🔴 Qualité données ML (garbage in, garbage out)
+   → Mitigation : Nettoyage données préalable, validation humaine résultats
+
+RISQUES ORGANISATIONNELS
+-------------------------
+🔴 Résistance standardisation (collectivités attachées méthodes locales)
+   → Mitigation : Concertation, accompagnement, flexibilité gabarit
+
+🔴 Adoption faible outils avancés (scoring, REX)
+   → Mitigation : Formations, success stories, ambassadeurs
+
+🔴 Maintenance complexité croissante (dette technique)
+   → Mitigation : Refactoring régulier, documentation, tests automatisés
+
+RISQUES DONNÉES
+---------------
+🔴 Exhaustivité limitée (zones blanches persistent)
+   → Mitigation : Campagnes ciblées, détection automatique ML
+
+🔴 Qualité hétérogène malgré standards (application variable)
+   → Mitigation : Validations automatiques, dashboard qualité visible
+
+🔴 Fraîcheur insuffisante (workflow non respecté)
+   → Mitigation : Alertes automatiques, gamification (badges, classements)
+
+RISQUES JURIDIQUES
+-------------------
+🔴 RGPD (propriétaires personnes physiques)
+   → Mitigation : Anonymisation, consentements, registre traitements
+
+🔴 Droits auteur photos REX (publications sans autorisation)
+   → Mitigation : Licences claires, accords signés, watermarking
+
+
+================================================================================
+              X. ALIGNEMENT AVEC BENCHMARK & BMC
+================================================================================
+
+COHÉRENCE AVEC BENCHMARK TECHNOLOGIQUE
+---------------------------------------
+✓ Choix Leaflet validé (phase 1-2)
+✓ Migration PostGIS recommandée (phase 3) = aligné
+✓ API REST structurée prioritaire = aligné
+✓ Automatisation progressive (connecteurs) = aligné
+✓ ML en phase 4 (innovation) = aligné
+
+COHÉRENCE AVEC BUSINESS MODEL CANVAS
+-------------------------------------
+✓ Proposition valeur centrée aide décision = aligné Discovery Axe 2
+✓ Interopérabilité API = aligné Discovery Axe 3
+✓ Open data et standards = aligné Discovery Axe 3
+✓ Partenariats institutionnels (DREAL, Cerema) = aligné Discovery Axe 1
+✓ Modèle économique freemium = finance développement priorités Discovery
+
+CONTRIBUTION AUX OBJECTIFS ZAN
+-------------------------------
+• Discovery Axe 4 (Pilotage ZAN) ↔ Proposition valeur BMC "Aide politiques publiques"
+• Mesure impact reconversions ↔ KPI BMC "Surface friches requalifiées"
+• Suivi stock dynamique ↔ Dashboard stratégique BMC
+• Capitalisation REX ↔ Relations clients BMC "Co-construction"
+
+
+================================================================================
+              XI. SYNTHÈSE EXÉCUTIVE - MESSAGES CLÉS
+================================================================================
+
+1. DIAGNOSTIC
+   12 problématiques majeures identifiées réparties en 4 axes :
+   - Données hétérogènes et incomplètes
+   - Outils d'exploitation limités
+   - Interopérabilité complexe
+   - Pilotage ZAN impossible actuellement
+
+2. ENJEUX
+   • Mobilisation friches freinée par manque outils adaptés
+   • Objectif ZAN compromis sans suivi dynamique stock
+   • Potentiel foncier sous-exploité (méconnaissance, difficultés priorisation)
+   • Expériences réussies non capitalisées (réinvention roue permanente)
+
+3. OPPORTUNITÉS
+   • Technologies matures disponibles (Leaflet, Chart.js, PostgreSQL, ML)
+   • Écosystème données ouvertes favorable (BASIAS, BASOL, Sit@del)
+   • Demande forte collectivités (outils aide décision)
+   • Soutien institutionnel (Cerema, DREAL, ministères)
+
+4. APPROCHE RECOMMANDÉE
+   Développement progressif par phases :
+   Phase 1 (0-6 mois) : Quick wins exploitabilité (interface, analytics)
+   Phase 2 (6-12 mois) : Standardisation et industrialisation (API, workflow)
+   Phase 3 (12-24 mois) : Automatisation et scoring avancé (ML, PostGIS)
+   Phase 4 (24+ mois) : Innovation et capitalisation (satellite, REX)
+
+5. FACTEURS CLÉS SUCCÈS
+   • Concertation acteurs (collectivités, État, opérateurs)
+   • Standardisation consensuelle (CNIG amélioré, accepté par tous)
+   • Accompagnement utilisateurs (formations, support, documentation)
+   • Itérations rapides (tests utilisateurs, ajustements)
+   • Communication régulière (success stories, chiffres clés)
+
+6. IMPACT ATTENDU
+   • Temps recherche friches : /5 (10 min → 2 min)
+   • Taux complétude données : +30% (60% → 80%+)
+   • Projets requalification : +50% (meilleure identification opportunités)
+   • Surface artificialisée évitée : mesurée et maximisée (contribution ZAN)
+   • Réseau acteurs mobilisés : communauté active 500+ utilisateurs
+
+
+================================================================================
+              XII. CONCLUSION - VISION CIBLE
+================================================================================
+
+La phase Discovery a mis en évidence que les limitations actuelles de
+l'écosystème friches (Cartofriches et outils associés) freinent
+significativement la mobilisation du foncier en friche et l'atteinte des
+objectifs ZAN.
+
+L'Application Friches, en adressant les 12 problématiques identifiées sur
+4 axes stratégiques, ambitionne de devenir la plateforme de référence pour :
+
+1. CENTRALISER et QUALIFIER les données friches nationales
+   (standardisation, complétude, fraîcheur)
+
+2. FACILITER l'exploitation opérationnelle par outils adaptés
+   (interface moderne, filtres avancés, analytics, scoring)
+
+3. FLUIDIFIER la circulation de l'information
+   (API robuste, interopérabilité SIG, automatisation)
+
+4. PILOTER efficacement les politiques ZAN
+   (suivi dynamique, mesure impact, capitalisation REX)
+
+L'approche par phases progressives permet de délivrer rapidement de la valeur
+(Quick Wins phase 1) tout en construisant les fondations d'une plateforme
+pérenne et scalable (phases 2-4).
+
+Le succès reposera sur :
+• Concertation et co-construction avec utilisateurs terrain
+• Excellence technique (UX, performance, sécurité)
+• Accompagnement humain (formations, support, communauté)
+• Innovation continue (R&D, ML, automatisation)
+
+La vision : transformer les données friches en levier stratégique de
+reconquête foncière et de réduction de l'artificialisation des sols,
+contribuant ainsi directement aux objectifs nationaux et européens de
+préservation des terres agricoles et naturelles.
+
+
+================================================================================
+                      ANNEXE - GLOSSAIRE
+================================================================================
+
+API : Application Programming Interface
+BAN : Base Adresse Nationale
+BASIAS : Base des Anciens Sites Industriels et Activités de Service
+BASOL : Base des sites et sols pollués
+CNIG : Conseil National de l'Information Géolocalisée
+CRUD : Create, Read, Update, Delete
+DREAL : Direction Régionale de l'Environnement, de l'Aménagement et du Logement
+EPCI : Établissement Public de Coopération Intercommunale
+GeoJSON : Format JSON pour données géographiques
+JWT : JSON Web Token (authentification)
+KPI : Key Performance Indicator (indicateur clé de performance)
+ML : Machine Learning (apprentissage automatique)
+NPS : Net Promoter Score (satisfaction)
+OGC : Open Geospatial Consortium
+PostGIS : Extension spatiale PostgreSQL
+REX : Retour d'EXpérience
+SIG : Système d'Information Géographique
+Sit@del : Base nationale permis de construire/démolir
+UUID : Universal Unique Identifier
+WFS : Web Feature Service (service OGC vecteurs)
+WMS : Web Map Service (service OGC raster)
+ZAN : Zéro Artificialisation Nette
+
+
+================================================================================
+FIN DU DOCUMENT - Synthèse Discovery - Version 1.0
+Date : 22 novembre 2025
+Projet : Application Friches
+Repository : github.com/Edu41-coder/Friches
+================================================================================

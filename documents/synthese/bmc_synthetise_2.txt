@@ -1,0 +1,323 @@
+================================================================================
+                    BUSINESS MODEL CANVAS - VERSION CONDENSÉE
+                           APPLICATION FRICHES
+================================================================================
+
+Version : 2.0 (Synthèse opérationnelle)
+Date : 22 novembre 2025
+Porteur : Cerema & Partenaires
+Stack : PHP 8+, MariaDB, Leaflet.js, Chart.js, Bootstrap 5
+
+
+================================================================================
+                            🤝 PARTENAIRES CLÉS
+================================================================================
+
+INSTITUTIONS : Ministères, DREAL, Régions, Départements, EPF
+NORMES : CNIG (standards SIG), UrbanSIMUL (intégration nationale)
+R&D : Universités, Cerema, agences d'urbanisme, bureaux d'études
+TECH : OpenStreetMap, Leaflet, hébergement web, MariaDB
+DATA : INSEE, Fonds Friches, ADEME, BRGM, communauté open data
+INTERNATIONAL : Institutions EU, réseaux transnationaux
+
+
+================================================================================
+                           ⚙️ ACTIVITÉS CLÉS
+================================================================================
+
+DONNÉES
+• Ingestion CSV → SQL, normalisation CNIG, contrôle qualité, audit
+
+DÉVELOPPEMENT
+• App web PHP/JavaScript : tableau interactif + carte Leaflet + analytics
+• Filtres multicritères, tri/pagination serveur, clustering, zones interactives
+
+SÉCURITÉ
+• Auth rôles (admin/user), CSRF, validation entrées, logs, RGPD
+
+R&D
+• Machine learning, prédiction, scoring, intégration UrbanSIMUL
+
+DIFFUSION
+• Open data, API REST, exports multiformats, intégrations SI
+
+SUPPORT
+• Documentation, formations, webinaires, assistance technique
+
+
+================================================================================
+                      🎯 PROPOSITION DE VALEUR (CENTRALE)
+================================================================================
+
+VUE UNIFIÉE NATIONALE
+• Plateforme unique consolidée, triple visualisation (tableau + carte + analytics)
+
+DÉCISION ACCÉLÉRÉE
+• Filtres temps réel, tri performant, graphiques instantanés, scoring
+
+GÉOLOCALISATION FIABLE
+• Coordonnées précises, clustering intelligent, sélection territoriale, 
+  synchronisation tableau ↔ carte
+
+CARACTÉRISATION ENRICHIE
+• Pollution détaillée, surfaces/unités, propriétaires public/privé, historique
+
+AIDE POLITIQUES PUBLIQUES
+• Priorisation requalification, opportunités aménagement, suivi impact
+
+TRANSPARENCE
+• Open data, audit complet, droits granulaires, méthodologies documentées
+
+PERFORMANCE
+• Pagination serveur, index SQL, lazy loading, disponibilité 99%+
+
+INTEROPÉRABILITÉ
+• API REST, UrbanSIMUL, connecteurs SI, SSO, exports multiformats
+
+INNOVATION
+• Données contribuables, ingénierie territoires fragiles, projets pilotes
+
+
+================================================================================
+                          📞 RELATIONS CLIENTS
+================================================================================
+
+SELF-SERVICE : Interface intuitive, doc en ligne, guides, FAQ
+SUPPORT : Assistance Cerema, hotline, tickets < 48h
+ACCOMPAGNEMENT : Formations sur mesure, webinaires, onboarding
+CO-CONSTRUCTION : Feedback, comité utilisateurs, tests features
+COMMUNICATION : Newsletters, conférences, publications, cas d'usage
+RÉSEAU : Référents régionaux, communauté de pratiques, forum
+
+
+================================================================================
+                          👥 SEGMENTS CLIENTS
+================================================================================
+
+1. COLLECTIVITÉS : Communes, EPCI, métropoles, services urbanisme
+2. RÉGIONS/DÉPARTEMENTS : Conseils patrimoine, développement économique
+3. ÉTAT : DDT, DREAL, Préfectures, Ministères
+4. ÉTABLISSEMENTS PUBLICS : EPF, agences urbanisme, aménageurs, Banque Territoires
+5. EXPERTS : Bureaux études, urbanistes, AMO, chefs projets
+6. RECHERCHE : Universités, labos, organismes publics, écoles ingénieurs
+7. PRIVÉ (PRO) : Promoteurs, investisseurs, foncières, développeurs
+8. RÉFÉRENTIELS : Créateurs guides, normalisation, politiques publiques
+
+
+================================================================================
+                        💰 STRUCTURE DE COÛTS
+================================================================================
+
+DÉVELOPPEMENT & MAINTENANCE (35-40%)
+• App initial MVC, évolutions, corrections bugs, R&D innovation
+
+INFRASTRUCTURE (15-20%)
+• Serveurs prod/staging/dev, hébergement, stockage, sauvegardes 24/7, monitoring
+
+DONNÉES & QUALITÉ (15-20%)
+• Import/normalisation, géocodage, contrôles cohérence, index SQL, licences
+
+RESSOURCES HUMAINES (20-25%)
+• Dev fullstack, chefs projet, experts SIG, chercheurs, sysadmin, formations
+
+COMMUNICATION & SUPPORT (5-10%)
+• Site vitrine, publications, conférences, hotline, documentation, change management
+
+
+================================================================================
+              💵 SOURCES DE REVENUS & MODÈLE DE PRICING
+================================================================================
+
+PHASE 1 : FINANCEMENT PUBLIC (MVP - Actuel)
+• Subventions État (Ministères, DREAL), budget Cerema
+• Programmes nationaux (Fonds Friches, Fonds Vert, ADEME, ANCT)
+• Contrats R&D et appels à projets
+
+PHASE 2 : HYBRIDE PUBLIC-PRIVÉ (Déploiement)
+• Prestations ingénierie (AMO, études faisabilité, diagnostics)
+• Formations payantes, certifications, webinaires premium
+• Publications (guides, études sectorielles, benchmarks)
+• Valorisation R&D (transfert techno, brevets, licences)
+
+PHASE 3 : MODÈLE SAAS (Industrialisation)
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ TIER GRATUIT - "DÉCOUVERTE"                                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Public : Collectivités < 10k hab                                        │
+│ Fonctions : Lecture seule, open data                                    │
+│ Support : Doc en ligne, FAQ                                             │
+│ Limite : Pas export, pas API                                            │
+│ Prix : 0€/an                                                            │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ TIER STANDARD - "ESSENTIEL"                                             │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Public : Collectivités 10-50k hab, bureaux études                       │
+│ Fonctions : CRUD complet, exports CSV/Excel, filtres avancés            │
+│ Support : Tickets < 48h, webinaires                                     │
+│ API : 1000 appels/mois                                                  │
+│ Prix : 500-2000€/an                                                     │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ TIER PREMIUM - "PROFESSIONNEL"                                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Public : Métropoles, Régions, Départements, EPF                         │
+│ Fonctions : Standard + API illimitée + personnalisations + SSO          │
+│ Support : Prioritaire < 24h, chef projet dédié                          │
+│ Formations : Sur mesure présentiel, analytics personnalisés             │
+│ Prix : 3000-8000€/an                                                    │
+└─────────────────────────────────────────────────────────────────────────┘
+
+┌─────────────────────────────────────────────────────────────────────────┐
+│ TIER ENTERPRISE - "SUR MESURE"                                          │
+├─────────────────────────────────────────────────────────────────────────┤
+│ Public : État, très grandes collectivités, consortiums                  │
+│ Fonctions : Toutes + développements spécifiques                         │
+│ Infrastructure : Hébergement dédié, SLA 99.9%                           │
+│ Support : 24/7, hotline dédiée, AMO projets                             │
+│ Prix : Sur devis                                                        │
+└─────────────────────────────────────────────────────────────────────────┘
+
+Options à la carte :
+• Formation : 800-1500€/jour  |  AMO projet : 600-1200€/jour
+• Développement spécifique : 500-800€/jour
+• Étude territoriale : 5-20k€ selon périmètre
+
+
+================================================================================
+                      📊 INDICATEURS CLÉS (KPI)
+================================================================================
+
+ADOPTION : Utilisateurs actifs, organisations abonnées, taux activation, durée sessions
+DONNÉES : Friches référencées, complétude fiches, fréquence MAJ, contributions externes
+PERFORMANCE : API < 200ms, carte < 2s, uptime > 99%, erreurs < 0.1%
+VALEUR MÉTIER : Projets requalification, surfaces requalifiées, économies, NPS > 50
+ÉCONOMIQUE : MRR, CAC, LTV/CAC > 3, renouvellement > 85%
+
+
+================================================================================
+                      🚀 AVANTAGES COMPÉTITIFS
+================================================================================
+
+1. LÉGITIMITÉ : Cerema, partenariats État/collectivités, conformité CNIG
+2. OPEN DATA : Données ouvertes, API publique, intégration UrbanSIMUL
+3. EXPERTISE : Équipe pluridisciplinaire (dev/SIG/urbanisme/recherche), R&D
+4. COUVERTURE : Base consolidée unique, réseau DREAL/Régions
+5. MODÈLE ACCESSIBLE : Freemium, pricing adapté, pas de lock-in
+
+
+================================================================================
+                      ⚠️ RISQUES & MITIGATION
+================================================================================
+
+TECHNIQUES
+• Performance dégradée → Index SQL, pagination, cache Redis
+• Sécurité RGPD → Audit, chiffrement, anonymisation, DPO
+• Dépendance open source → Veille, contributions communauté, plan B
+
+ORGANISATIONNELS
+• Faible adoption → Change management, formations, ambassadeurs
+• Qualité données → Validation, contrôles auto
+• Manque RH → Priorisation, externalisation
+
+STRATÉGIQUES
+• Concurrence → Positionnement service public, open data, réseau
+• Évolution réglementaire → Veille juridique, groupes normatifs
+• Dépendance financements publics → Diversification revenus, freemium
+
+
+================================================================================
+                      🗓️ FEUILLE DE ROUTE (ROADMAP)
+================================================================================
+
+PHASE 1 : MVP & VALIDATION (6 mois - ACTUEL) ✓
+• App core (tableau + carte + analytics), données nationales, pilote XAMPP
+→ Objectif : Valider UX et proposition de valeur
+
+PHASE 2 : CONSOLIDATION (6-12 mois)
+• Serveur production HTTPS, API REST publique, SSO
+• Formations nationales, 20-30 collectivités pilotes
+→ Objectif : 50+ organisations actives
+
+PHASE 3 : INDUSTRIALISATION (12-24 mois)
+• SaaS opérationnel, connecteurs auto (DREAL/EPF/INSEE)
+• Module prédictif ML, intégration UrbanSIMUL, marketplace
+→ Objectif : 100+ organisations, modèle économique équilibré
+
+PHASE 4 : INNOVATION & EXPANSION (24+ mois)
+• IA détection satellite, module financier, dimension EU
+• App mobile terrain, offre BtoB privé
+→ Objectif : Leader national, rayonnement européen
+
+
+================================================================================
+                      ✅ FACTEURS CLÉS DE SUCCÈS
+================================================================================
+
+1. QUALITÉ DONNÉES : Exhaustivité, fiabilité, actualité, standardisation
+2. UX : Interface intuitive, performance, visualisations pertinentes
+3. ÉCOSYSTÈME : Engagement DREAL/collectivités, universités, soutien institutionnel
+4. INNOVATION : R&D active (IA), écoute utilisateurs, veille techno
+5. MODÈLE ÉCONOMIQUE : Diversification revenus, équilibre public/privé
+
+
+================================================================================
+                            🎯 SYNTHÈSE STRATÉGIQUE
+================================================================================
+
+Le BMC de l'Application Friches repose sur 3 PILIERS :
+
+1. MISSION SERVICE PUBLIC
+   → Transparence, open data, aide politiques publiques, accessibilité
+
+2. EXCELLENCE TECHNIQUE
+   → Performance, sécurité, UX, interopérabilité UrbanSIMUL, innovation R&D/IA
+
+3. MODÈLE ÉCONOMIQUE HYBRIDE ÉVOLUTIF
+   Phase 1 : Financement public (MVP)
+   Phase 2 : Hybride public-privé (prestations + formations)
+   Phase 3 : SaaS freemium (abonnements + services premium)
+
+ÉCOSYSTÈME partenarial fort (DREAL, Régions, EPF, Cerema, universités, CNIG) 
+garantit légitimité et qualité.
+
+PROPOSITION DE VALEUR centrale : vue unifiée + décision accélérée + 
+géolocalisation fiable + transparence → besoins critiques collectivités.
+
+ROADMAP progressive : montée puissance maîtrisée, validation étapes, agilité 
+adaptation terrain.
+
+ENJEU PRINCIPAL : Transformer outil technique en service public numérique 
+de référence pour reconversion friches en France, avec modèle économique 
+pérenne et scalable.
+
+
+================================================================================
+                            RÉFÉRENCES TECHNIQUES
+================================================================================
+
+PROJET : Application Friches
+REPOSITORY : github.com/Edu41-coder/Friches
+PORTEUR : Cerema & Partenaires
+LICENCE : Open source (à définir)
+
+STACK :
+• Backend : PHP 8+, PDO, MariaDB/MySQL
+• Frontend : HTML5, CSS3, JavaScript ES6+, Bootstrap 5
+• Carto : Leaflet.js, MarkerCluster, Leaflet.draw
+• Viz : Chart.js 4.4.0
+• Utils : jQuery 3.7.1, Select2 4.1.0
+
+NORMES :
+• CNIG (normalisation géographique)
+• Open data (licence ouverte)
+• RGPD (protection données)
+• WCAG 2.1 (accessibilité web - cible)
+
+
+================================================================================
+FIN - BMC Condensé - Version 2.0 - 22 novembre 2025
+================================================================================

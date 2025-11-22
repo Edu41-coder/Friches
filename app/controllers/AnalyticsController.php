@@ -24,6 +24,10 @@ class AnalyticsController {
      * Affiche la page d'analytics
      */
     public function index() {
+        // Récupérer les listes pour les filtres
+        $communes = $this->fricheModel->getDistinctCommunes();
+        $codesInsee = $this->fricheModel->getDistinctCodesInsee();
+        
         require __DIR__ . '/../views/analytics/index.php';
     }
     
@@ -34,7 +38,9 @@ class AnalyticsController {
         header('Content-Type: application/json');
         
         try {
-            $stats = $this->fricheModel->getGlobalStats();
+            // Récupérer les filtres
+            $filters = $this->getFiltersFromRequest();
+            $stats = $this->fricheModel->getGlobalStats($filters);
             
             echo json_encode([
                 'success' => true,
@@ -58,36 +64,38 @@ class AnalyticsController {
         $chartType = $_GET['type'] ?? '';
         
         try {
+            // Récupérer les filtres
+            $filters = $this->getFiltersFromRequest();
             $data = [];
             
             switch ($chartType) {
                 case 'types':
-                    $data = $this->fricheModel->getTypeDistribution();
+                    $data = $this->fricheModel->getTypeDistribution($filters);
                     break;
                     
                 case 'statuts':
-                    $data = $this->fricheModel->getStatusDistribution();
+                    $data = $this->fricheModel->getStatusDistribution($filters);
                     break;
                     
                 case 'communes':
                     $limit = isset($_GET['limit']) ? (int)$_GET['limit'] : 10;
-                    $data = $this->fricheModel->getTopCommunes($limit);
+                    $data = $this->fricheModel->getTopCommunes($limit, $filters);
                     break;
                     
                 case 'soil_pollution':
-                    $data = $this->fricheModel->getSoilPollutionDistribution();
+                    $data = $this->fricheModel->getSoilPollutionDistribution($filters);
                     break;
                     
                 case 'building_pollution':
-                    $data = $this->fricheModel->getBuildingPollutionDistribution();
+                    $data = $this->fricheModel->getBuildingPollutionDistribution($filters);
                     break;
                     
                 case 'owner_types':
-                    $data = $this->fricheModel->getOwnerTypeDistribution();
+                    $data = $this->fricheModel->getOwnerTypeDistribution($filters);
                     break;
                     
                 case 'surfaces':
-                    $data = $this->fricheModel->getSurfaceDistribution();
+                    $data = $this->fricheModel->getSurfaceDistribution($filters);
                     break;
                     
                 default:
@@ -105,5 +113,22 @@ class AnalyticsController {
                 'error' => $e->getMessage()
             ], JSON_UNESCAPED_UNICODE);
         }
+    }
+    
+    /**
+     * Extrait les filtres de la requête HTTP
+     */
+    private function getFiltersFromRequest() {
+        $filters = [];
+        
+        if (!empty($_GET['comm_nom'])) {
+            $filters['comm_nom'] = trim($_GET['comm_nom']);
+        }
+        
+        if (!empty($_GET['comm_insee'])) {
+            $filters['comm_insee'] = trim($_GET['comm_insee']);
+        }
+        
+        return $filters;
     }
 }

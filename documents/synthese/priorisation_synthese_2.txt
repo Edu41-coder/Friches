@@ -1,0 +1,292 @@
+================================================================================
+              SYNTHÈSE PRIORISATION - APPLICATION FRICHES
+                     Roadmap consolidée et initiatives
+================================================================================
+
+Date : 22 novembre 2025
+Objectif : Vision unifiée des priorités et séquençage par phases
+
+
+================================================================================
+                        I. MÉTHODOLOGIE DE PRIORISATION
+================================================================================
+
+CRITÈRES DE SCORING (6 dimensions pondérées)
+---------------------------------------------
+• Impact (30%) : Valeur métier générée
+• Urgence (20%) : Pression temporelle / dépendances
+• Effort (-20%) : Complexité & charge (inversé)
+• Risque (-10%) : Incertitudes techniques (inversé)
+• Alignement (20%) : Cohérence avec vision
+• Qualité données (10%) : Amélioration standardisation
+
+Formule : Score = Σ (poids × valeur/5)
+Quadrants : Quick Win (score ≥55%, effort ≤2.5) | Leverage (score ≥50%, effort ≤3.5)
+            Strategic Bet (score ≥45%, effort >3) | Monitor (autres)
+
+
+================================================================================
+                        II. INITIATIVES PRIORISÉES (9 ÉVALUÉES)
+================================================================================
+
+QUICK WINS (Phase 1 : 0-6 mois)
+--------------------------------
+1. Standardisation import (64%)
+   Impact 5/5, Effort 2/5 → Gabarit CSV + mapping automatique
+   
+2. Export analytique rapide (58%)
+   Impact 4/5, Effort 2/5 → CSV structuré, Excel, PDF rapport
+   
+3. Lazy loading carte (50%)
+   Impact 3/5, Effort 2/5 → Chargement par zone, cache client
+
+LEVERAGE (Phase 1-2 : 0-12 mois)
+---------------------------------
+4. QA géo automatisée (56%)
+   Impact 4/5, Effort 3/5 → Validation coordonnées, détection aberrations
+   
+5. Dashboard qualité (50%)
+   Impact 4/5, Effort 3/5 → KPI territoire, graphiques évolution
+
+STRATEGIC BETS (Phase 2-3 : 6-24 mois)
+---------------------------------------
+6. Scoring multi-critères (54%)
+   Impact 5/5, Effort 4/5 → Pilote Phase 2, déploiement national Phase 3
+   
+7. Scénarios réhabilitation (52%)
+   Impact 5/5, Effort 4/5 → Simulation coûts/délais, aides mobilisables
+   
+8. Migration PostGIS (40%)
+   Impact 4/5, Effort 5/5 → Après stabilisation données, Phase 3
+
+MONITOR (Phase 4+ : 24+ mois)
+------------------------------
+9. API publique (32%)
+   Impact 3/5, Effort 4/5, Risque 4/5 → API partenaires Phase 2, publique Phase 4
+
+
+OBJECTIFS STRATÉGIQUES CEREMA (3 priorités)
+--------------------------------------------
+A. Faciliter intégration outils métiers locaux (Score 7/9)
+   → API structurée, exports multiformats, plugins QGIS/ArcGIS
+   → Phase 2-3
+
+B. Améliorer complétude & fraîcheur données (Score 6/9)
+   → Standardisation, QA, workflow collaboratif
+   → Phase 1-2
+
+C. Simplifier contribution locale données (Score 7/9)
+   → Rôles/permissions, workflow validation, gamification
+   → Phase 2
+
+
+INITIATIVES OPÉRATIONNELLES (Satisfaction client)
+--------------------------------------------------
+• Intégration outils métiers : 10/12 (très haute priorité)
+• Contribution locale : 9/12 (haute priorité)
+• Complétude/fraîcheur : 8/12 (haute priorité)
+
+
+================================================================================
+                        III. ROADMAP PAR PHASE
+================================================================================
+
+PHASE 1 - MVP AMÉLIORÉ (0-6 MOIS)
+----------------------------------
+Objectif : Quick wins données + adoption initiale
+
+Sprint 1-2 (Mois 1-2)
+✓ Standardisation import (gabarit CSV, dictionnaire données)
+✓ Export analytique (CSV, Excel, PDF)
+
+Sprint 3-4 (Mois 3-4)
+✓ QA géo automatisée (validation France métro)
+✓ Lazy loading carte (chargement par zone)
+
+Sprint 5-6 (Mois 5-6)
+✓ Dashboard qualité (KPI territoire, alertes seuils)
+✓ Tests utilisateurs (3-5 collectivités pilotes)
+
+Livrables : MVP opérationnel, données fiables, NPS >40
+
+
+PHASE 2 - CONSOLIDATION (6-12 MOIS)
+------------------------------------
+Objectif : Collaboration + API structurée
+
+Sprint 7-10 (Mois 7-10)
+✓ Workflow contribution collaborative
+  - Rôles (admin, contributeur, user)
+  - Interface saisie simplifiée
+  - Validation multi-niveaux
+  - Historique audit, gamification
+  
+✓ API structurée partenaires
+  - Authentification JWT, documentation OpenAPI
+  - Pagination, filtres, rate limiting
+
+Sprint 11-12 (Mois 11-12)
+✓ Connecteurs automatiques (Sit@del, BASIAS, BASOL)
+✓ Scoring multi-critères (conception + pilote 1-2 départements)
+
+Livrables : 50+ organisations actives, API documentée, prototype scoring
+
+
+PHASE 3 - INDUSTRIALISATION (12-24 MOIS)
+-----------------------------------------
+Objectif : Scalabilité + aide décision avancée
+
+Sprint 13-18 (Mois 13-18)
+✓ Migration PostGIS (requêtes spatiales optimisées)
+✓ Exports multiformats (GeoJSON, Shapefile, WMS/WFS)
+✓ Plugins QGIS/ArcGIS
+
+Sprint 19-24 (Mois 19-24)
+✓ Scoring multi-critères déploiement national
+✓ Scénarios réhabilitation (simulateurs coûts/délais)
+
+Livrables : 100+ organisations, PostGIS opérationnel, scoring national
+
+
+PHASE 4+ - INNOVATION (24+ MOIS)
+---------------------------------
+Objectif : IA + capitalisation REX
+
+✓ API publique (si demande communauté développeurs avérée)
+✓ Détection automatique friches (ML + images satellites)
+✓ Bibliothèque REX projets (fiches standardisées, moteur recherche)
+✓ Module prédictif (probabilité succès requalification)
+
+Livrables : Plateforme leader national, communauté 500+ utilisateurs
+
+
+================================================================================
+                        IV. ARBITRAGES CRITIQUES
+================================================================================
+
+1. API PUBLIQUE : Partenaires Phase 2 vs Publique Phase 4
+   Décision : API authentifiée Phase 2 (EPCI, bureaux études)
+              API ouverte Phase 4 (si demande communauté)
+   Rationale : ROI mesurable, risques maîtrisés Phase 2
+
+2. SCORING : Conception Phase 2 vs Déploiement Phase 3
+   Décision : Pilote 1-2 départements Phase 2 (6-8 critères)
+              Déploiement national Phase 3 (10-12 critères)
+   Rationale : Validation approche, ajustements itératifs
+
+3. POSTGIS : Migration Phase 3 vs Phase 4
+   Décision : Phase 3 (si volume >5000 friches OU analyses spatiales requises)
+   Rationale : Requêtes spatiales natives, performance >10k friches
+
+4. CONTRIBUTION COLLABORATIVE : Phase 2 vs Phase 1
+   Décision : Phase 2 (après MVP stable)
+   Rationale : Workflow complexe, prérequis standardisation + QA
+
+
+================================================================================
+                        V. MATRICE CONSOLIDÉE
+================================================================================
+
+| Phase    | Initiatives clés                      | Dépendances       | Priorité  |
+|----------|---------------------------------------|-------------------|-----------|
+| Phase 1  | Standardisation import                | Aucune            | Très Haut |
+| 0-6m     | QA géo + Dashboard qualité            | Standardisation   | Très Haut |
+|          | Export analytique + Lazy loading      | Parallèle         | Haut      |
+|----------|---------------------------------------|-------------------|-----------|
+| Phase 2  | Workflow collaboratif                 | Phase 1 stable    | Très Haut |
+| 6-12m    | API structurée partenaires            | Phase 1 stable    | Très Haut |
+|          | Scoring (conception) + Connecteurs    | Atelier + API     | Haut      |
+|----------|---------------------------------------|-------------------|-----------|
+| Phase 3  | Migration PostGIS                     | Données stables   | Moyen-Haut|
+| 12-24m   | Scoring (déploiement national)        | Pilote Phase 2    | Très Haut |
+|          | Exports multiformats + Plugins        | API Phase 2       | Haut      |
+|----------|---------------------------------------|-------------------|-----------|
+| Phase 4+ | API publique (ouverte)                | API Phase 2       | Moyen     |
+| 24+m     | Détection ML + Bibliothèque REX       | PostGIS + données | Moyen     |
+
+
+================================================================================
+                        VI. KPI DE SUCCÈS PAR PHASE
+================================================================================
+
+Phase 1 (0-6 mois)
+• Taux géolocalisation valide : >90% (vs 72% baseline)
+• Taux complétude fiches : >75% (vs 60% baseline)
+• Temps recherche friche : <3 min (vs >10 min)
+• Satisfaction NPS : >40 (pilotes)
+
+Phase 2 (6-12 mois)
+• Contributeurs actifs : >10 (EPCI, collectivités)
+• Taux validation contributions : >80%
+• Utilisateurs API : >20 organisations partenaires
+• Taux utilisation scoring pilote : >70% sessions
+
+Phase 3 (12-24 mois)
+• Organisations actives : >100
+• Volume friches base : >8000 (couverture nationale)
+• Performance requêtes : <2s (10k+ marqueurs)
+• Taux utilisation scoring national : >50%
+
+Phase 4+ (24+ mois)
+• Projets REX documentés : >100
+• Taux détection auto ML : >60%
+• Surface évitée ZAN : 100% projets mesurée
+
+
+================================================================================
+                        VII. RISQUES & MITIGATIONS
+================================================================================
+
+Risque 1 : Sous-estimation effort scoring multi-critères
+→ Pilote restreint Phase 2, atelier co-construction, MVP 6 critères
+
+Risque 2 : Adoption faible workflow collaboratif
+→ Formations, gamification, ambassadeurs territoriaux, feedback rapide
+
+Risque 3 : Migration PostGIS complexe
+→ Étude migration, tests exhaustifs, rollback plan, migration progressive
+
+Risque 4 : Qualité données hétérogène (contribution collaborative)
+→ Validation multi-niveaux, automatique + humaine, dashboard qualité visible
+
+Risque 5 : Dépendances API tierces (Sit@del, BASIAS, BASOL)
+→ Conventions partenariats, fallback import CSV manuel
+
+
+================================================================================
+                        VIII. ALIGNEMENT STRATÉGIQUE
+================================================================================
+
+BMC (Business Model Canvas)
+• Proposition valeur "Aide décision" → Scoring Phase 2-3
+• Proposition valeur "Données fiables" → Standardisation Phase 1
+• Relations clients "Co-construction" → Workflow collaboratif Phase 2
+• Partenariats "DREAL, Cerema" → Connecteurs Phase 2
+
+Benchmark technologique
+• Leaflet validé → Lazy loading Phase 1
+• PostGIS recommandé → Migration Phase 3
+• API REST → Phase 2
+
+Discovery (12 problématiques)
+• Axe 1 Données (Hétérogénéité, Incomplétude, Fraîcheur) → Phase 1-2
+• Axe 2 Exploitabilité (Interface, Priorisation, Synthèse) → Phase 1-3
+• Axe 3 Interopérabilité (SIG, Géostandard, Automatisation) → Phase 2-3
+• Axe 4 Pilotage ZAN (Suivi stock, Impact, REX) → Phase 3-4
+
+
+================================================================================
+                        IX. PROCHAINES ÉTAPES IMMÉDIATES
+================================================================================
+
+1. Validation roadmap avec équipe + sponsors (Cerema, DREAL)
+2. Lancement Sprint 1 : Standardisation import (gabarit CSV + dictionnaire)
+3. Recrutement collectivités pilotes (3-5 territoires Phase 1)
+4. Mise en place KPI tracking (dashboard pilotage)
+5. Définition seuils alertes (notifications équipe si dérive)
+
+
+================================================================================
+FIN DU DOCUMENT - Priorisation Synthèse v2 - Version allégée
+Date : 22 novembre 2025 | Projet : Application Friches | 240 lignes
+================================================================================

@@ -6,6 +6,8 @@
     <title>Analyses & Statistiques - Application Friches</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/select2-bootstrap-5-theme@1.3.0/dist/select2-bootstrap-5-theme.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="/Friches/public/css/style.css">
     <style>
         .stat-card {
@@ -147,6 +149,60 @@
                         </div>
                     </div>
 
+                    <!-- Panneau de filtres -->
+                    <div class="card mb-4 border-primary">
+                        <div class="card-header bg-primary text-white">
+                            <h5 class="mb-0"><i class="bi bi-funnel"></i> Filtres d'analyse</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row g-3 align-items-end">
+                                <div class="col-md-5">
+                                    <label class="form-label fw-bold">Filtrer par Commune</label>
+                                    <select id="filterCommune" class="form-select">
+                                        <option value="">Toutes les communes</option>
+                                        <?php if (isset($communes) && is_array($communes)):
+                                            foreach ($communes as $commune): ?>
+                                                <option value="<?= htmlspecialchars($commune) ?>"><?= htmlspecialchars($commune) ?></option>
+                                            <?php endforeach;
+                                        endif; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-5">
+                                    <label class="form-label fw-bold">Filtrer par Code INSEE <small class="text-muted">(ou département)</small></label>
+                                    <select id="filterCodeInsee" class="form-select">
+                                        <option value="">Tous les codes INSEE</option>
+                                        <?php if (isset($codesInsee) && is_array($codesInsee)):
+                                            $departements = [];
+                                            foreach ($codesInsee as $code) {
+                                                $dept = substr($code, 0, 2);
+                                                if (!isset($departements[$dept])) {
+                                                    $departements[$dept] = [];
+                                                }
+                                                $departements[$dept][] = $code;
+                                            }
+                                            ksort($departements);
+                                            
+                                            foreach ($departements as $dept => $codes): ?>
+                                                <optgroup label="Département <?= htmlspecialchars($dept) ?>">
+                                                    <option value="dept:<?= htmlspecialchars($dept) ?>">✓ Tout le département <?= htmlspecialchars($dept) ?> (<?= count($codes) ?> communes)</option>
+                                                    <?php foreach ($codes as $code): ?>
+                                                        <option value="<?= htmlspecialchars($code) ?>"><?= htmlspecialchars($code) ?></option>
+                                                    <?php endforeach; ?>
+                                                </optgroup>
+                                            <?php endforeach;
+                                        endif; ?>
+                                    </select>
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="button" id="resetAnalyticsFilters" class="btn btn-outline-danger w-100">
+                                        <i class="bi bi-x-circle"></i> Réinitialiser
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="activeFiltersAnalytics" class="mt-3"></div>
+                        </div>
+                    </div>
+
                     <!-- Section Types et Statuts -->
                     <h5 class="section-title">Types et Statuts des Friches</h5>
                     <div class="row mb-4">
@@ -262,6 +318,19 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        // Configuration de la langue française pour Select2
+        $.fn.select2.defaults.set('language', {
+            noResults: function() { return "Aucun résultat trouvé"; },
+            searching: function() { return "Recherche en cours..."; },
+            loadingMore: function() { return "Chargement de résultats supplémentaires..."; },
+            inputTooShort: function(args) {
+                return "Veuillez saisir au moins " + args.minimum + " caractère" + (args.minimum > 1 ? "s" : "");
+            }
+        });
+    </script>
     <script src="/Friches/public/js/utils.js"></script>
     <script src="/Friches/public/js/analytics.js"></script>
 </body>

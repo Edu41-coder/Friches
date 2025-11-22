@@ -1,0 +1,170 @@
+================================================================================
+                    KPI SYNTHÈSE - APPLICATION FRICHES
+                     5 Indicateurs clés consolidés
+================================================================================
+
+Date : 22 novembre 2025
+Objectif : Tableau de bord simplifié pour pilotage et décisions produit
+
+
+================================================================================
+                        I. LES 5 KPI ESSENTIELS
+================================================================================
+
+KPI 1 - QUALITÉ DONNÉES (Complétude & Géolocalisation)
+-------------------------------------------------------
+Mesure : % de friches avec données complètes (>80% champs critiques renseignés)
+         ET coordonnées géographiques valides
+
+Formule : (Friches complètes ET géolocalisées / Total friches) × 100
+Baseline : 50%  |  Cible 6 mois : 80%  |  Cible 12 mois : 90%
+Fréquence : Mensuel
+
+Champs critiques (12) : nom, commune, département, adresse, latitude, longitude,
+type_friche, surface, statut, pollution_sol, pollution_batiments, date_maj
+
+Actions prioritaires :
+✓ Standardisation import (gabarit CSV + validation automatique)
+✓ QA géo automatisée (détection aberrations, enrichissement BAN)
+✓ Croisement bases externes (BASIAS, BASOL, SIRENE)
+✓ Workflow contribution collaborative (décentralisation saisie)
+
+
+KPI 2 - ADOPTION UTILISATEURS (Usage actif plateforme)
+-------------------------------------------------------
+Mesure : Taux d'utilisateurs actifs mensuels (sessions carte + filtres + exports)
+
+Formule : Utilisateurs actifs mensuels / Utilisateurs inscrits totaux
+Baseline : 35%  |  Cible 6 mois : 60%  |  Cible 12 mois : 75%
+Fréquence : Hebdomadaire
+
+Métriques secondaires :
+• Sessions carte/semaine : 40 → 120
+• Durée session moyenne : >8 min
+• Taux rebond : <40%
+
+Actions prioritaires :
+✓ UX optimisée (onboarding, lazy loading, synchronisation tableau↔carte)
+✓ Fonctionnalités valeur ajoutée (analytics, exports multiformats)
+✓ Communication régulière (newsletters, webinaires, ambassadeurs)
+
+
+KPI 3 - EFFICACITÉ PIPELINE (Temps intégration & MAJ)
+------------------------------------------------------
+Mesure : Délai moyen entre découverte d'une friche et disponibilité dans plateforme
+
+Formule : Temps moyen identification → intégration (heures ou mois selon phase)
+Baseline : 16h import + 12 mois MAJ  |  Cible Phase 1 : 6h + 6 mois  |  Phase 2 : 2h + 3 mois
+Fréquence : Mensuel
+
+Actions prioritaires :
+✓ Pipeline ETL optimisé (mapping automatique, traitement batch asynchrone)
+✓ Connecteurs automatiques (Sit@del détection projets temps réel)
+✓ Workflow validation rapide (validation automatique + référents territoriaux)
+
+
+KPI 4 - AIDE DÉCISION (Friches priorisées avec scoring)
+--------------------------------------------------------
+Mesure : % de friches avec score de priorisation calculé et utilisé pour décisions
+
+Formule : (Friches avec score calculé / Total friches) × 100
+Baseline : 0%  |  Cible Phase 2 : 40% (pilote)  |  Phase 3 : 70% (national)
+Fréquence : Mensuel
+
+Critères scoring (6-8) : Surface, localisation, pollution, statut foncier,
+                         desserte transports, tension foncière locale, coût estimé
+
+Actions prioritaires :
+✓ Module scoring multi-critères (conception + atelier pondérations Phase 2)
+✓ Interface simplifiée (sliders, visualisation scores, comparateur)
+✓ Pilote 3-5 territoires (validation approche, ajustements itératifs)
+
+
+KPI 5 - IMPACT ZAN (Reconversions suivies)
+-------------------------------------------
+Mesure : % de friches ayant évolué positivement (en projet, requalifiée) sur 12 mois
+
+Formule : (Friches statut évolué / Total friches) × 100 sur période glissante 12 mois
+Baseline : Non mesuré  |  Cible Phase 3 : 10%  |  Phase 4 : 15%
+Fréquence : Trimestriel
+
+Métriques complémentaires :
+• Surface artificialisée évitée : 500 ha/an
+• Logements créés : suivi post-projet
+• Emplois créés/préservés : suivi post-projet
+
+Actions prioritaires :
+✓ Historisation données (tracking évolution statuts automatique)
+✓ Module impact ZAN (calcul surface évitée, contribution objectifs territoriaux)
+✓ Fiches bilan projets (avant/après, documentation REX)
+
+
+================================================================================
+                    II. TABLEAU DE BORD SYNTHÉTIQUE
+================================================================================
+
+| KPI                          | Baseline | Phase 1 (6m) | Phase 2 (12m) | Phase 3+ (24m) | Fréquence |
+|------------------------------|----------|--------------|---------------|----------------|-----------|
+| 1. Qualité données           | 50%      | 80%          | 90%           | 95%            | Mensuel   |
+| 2. Adoption utilisateurs     | 35%      | 60%          | 75%           | 85%            | Hebdo     |
+| 3. Efficacité pipeline       | 16h+12m  | 6h+6m        | 2h+3m         | <1h+1m         | Mensuel   |
+| 4. Aide décision (scoring)   | 0%       | 20%          | 40%           | 70%            | Mensuel   |
+| 5. Impact ZAN (évolution)    | N/A      | N/A          | 5%            | 15%            | Trimestre |
+
+
+================================================================================
+                    III. IMPLÉMENTATION & SUIVI
+================================================================================
+
+COLLECTE AUTOMATISÉE
+--------------------
+• Logs web (sessions, durée) : Google Analytics ou Matomo
+• Métriques BDD : Requêtes SQL automatisées (cron quotidien)
+• Centralisation : Table kpi_snapshot (historique hebdo/mensuel)
+
+DASHBOARD ADMIN
+---------------
+• Page /admin/kpis : 5 cartes KPI avec jauges progression
+• Graphiques évolution 6-12 mois (Chart.js)
+• Alertes seuils (notifications si dérive >10%)
+
+REVUE MENSUELLE
+---------------
+• Réunion équipe 30 min : analyse tendances + actions correctives
+• Rapport exécutif sponsors : 1 page PDF avec 5 KPI + alertes
+• Ajustement roadmap selon retours terrain
+
+
+================================================================================
+                    IV. ALIGNEMENT STRATÉGIQUE
+================================================================================
+
+Discovery (12 problématiques) → 5 KPI
+• Axe 1 Données → KPI 1 Qualité
+• Axe 2 Exploitabilité → KPI 2 Adoption + KPI 4 Scoring
+• Axe 3 Interopérabilité → KPI 3 Efficacité
+• Axe 4 Pilotage ZAN → KPI 5 Impact ZAN
+
+Business Model Canvas → 5 KPI
+• Proposition valeur "Données fiables" → KPI 1
+• Proposition valeur "Aide décision" → KPI 4
+• Relations clients "Adoption" → KPI 2
+• Structure coûts "Efficacité" → KPI 3
+• Impact sociétal "ZAN" → KPI 5
+
+
+================================================================================
+                        V. PROCHAINES ÉTAPES
+================================================================================
+
+1. Implémenter dashboard KPI (page /admin/kpis) - Sprint 5-6
+2. Automatiser collecte métriques (scripts PHP cron) - Sprint 6
+3. Définir seuils alertes (notifications Slack/email) - Sprint 6
+4. Établir routine revue mensuelle équipe + sponsors - Dès Phase 1
+5. Ajuster roadmap data-driven selon évolution KPI - Continu
+
+
+================================================================================
+FIN DU DOCUMENT - KPI Synthèse - Version 1.0 (Résumée)
+Date : 22 novembre 2025 | Projet : Application Friches
+================================================================================

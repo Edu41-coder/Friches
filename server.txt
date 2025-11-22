@@ -25,3 +25,11 @@ If Git is installed and in PATH, you'll see the version number (e.g., git versio
 
 To see your full PATH:
 $env:PATH -split ';'
+
+
+
+git config --global user.email "hehermosilla@gmail.com"
+git config --global user.name "Edu41-coder" 
+git add .
+git commit -m "commit_server"
+git push origin main

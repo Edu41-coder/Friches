@@ -25,6 +25,8 @@ class FrichesController {
         $types = $this->frichesModel->getDistinctValues('site_type');
         $statuts = $this->frichesModel->getDistinctValues('site_statut');
         $pollutions = $this->frichesModel->getDistinctValues('sol_pollution_existe');
+        $communes = $this->frichesModel->getDistinctCommunes();
+        $codesInsee = $this->frichesModel->getDistinctCodesInsee();
         
         require_once __DIR__ . '/../views/friches/index.php';
     }
@@ -55,6 +57,9 @@ class FrichesController {
             }
             if (!empty($_GET['comm_nom'])) {
                 $filters['comm_nom'] = trim($_GET['comm_nom']);
+            }
+            if (!empty($_GET['comm_insee'])) {
+                $filters['comm_insee'] = trim($_GET['comm_insee']);
             }
             if (!empty($_GET['sol_pollution_existe'])) {
                 $filters['sol_pollution_existe'] = $_GET['sol_pollution_existe'];

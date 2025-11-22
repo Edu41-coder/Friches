@@ -99,7 +99,7 @@ class Friche {
         
         // Application des filtres
         if (!empty($filters['search'])) {
-            $sql .= " AND (site_nom LIKE :search OR comm_nom LIKE :search OR site_id LIKE :search)";
+            $sql .= " AND site_id LIKE :search";
             $params['search'] = '%' . $filters['search'] . '%';
         }
         
@@ -114,8 +114,20 @@ class Friche {
         }
         
         if (!empty($filters['comm_nom'])) {
-            $sql .= " AND comm_nom LIKE :comm_nom";
-            $params['comm_nom'] = '%' . $filters['comm_nom'] . '%';
+            $sql .= " AND comm_nom = :comm_nom";
+            $params['comm_nom'] = $filters['comm_nom'];
+        }
+        
+        if (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre par département (dept:XX)
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $dept = substr($filters['comm_insee'], 5); // Extraire le code département
+                $sql .= " AND comm_insee LIKE :comm_insee";
+                $params['comm_insee'] = $dept . '%';
+            } else {
+                $sql .= " AND comm_insee = :comm_insee";
+                $params['comm_insee'] = $filters['comm_insee'];
+            }
         }
         
         if (!empty($filters['sol_pollution_existe'])) {
@@ -181,7 +193,7 @@ class Friche {
         
         // Application des mêmes filtres que findAll
         if (!empty($filters['search'])) {
-            $sql .= " AND (site_nom LIKE :search OR comm_nom LIKE :search OR site_id LIKE :search)";
+            $sql .= " AND site_id LIKE :search";
             $params['search'] = '%' . $filters['search'] . '%';
         }
         
@@ -196,8 +208,20 @@ class Friche {
         }
         
         if (!empty($filters['comm_nom'])) {
-            $sql .= " AND comm_nom LIKE :comm_nom";
-            $params['comm_nom'] = '%' . $filters['comm_nom'] . '%';
+            $sql .= " AND comm_nom = :comm_nom";
+            $params['comm_nom'] = $filters['comm_nom'];
+        }
+        
+        if (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre par département (dept:XX)
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $dept = substr($filters['comm_insee'], 5); // Extraire le code département
+                $sql .= " AND comm_insee LIKE :comm_insee";
+                $params['comm_insee'] = $dept . '%';
+            } else {
+                $sql .= " AND comm_insee = :comm_insee";
+                $params['comm_insee'] = $filters['comm_insee'];
+            }
         }
         
         if (!empty($filters['sol_pollution_existe'])) {
@@ -251,6 +275,26 @@ class Friche {
     }
     
     /**
+     * Récupère les communes distinctes pour les filtres
+     * @return array
+     */
+    public function getDistinctCommunes() {
+        $sql = "SELECT DISTINCT comm_nom as value FROM friches WHERE comm_nom IS NOT NULL ORDER BY comm_nom";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+    
+    /**
+     * Récupère les codes INSEE distincts pour les filtres
+     * @return array
+     */
+    public function getDistinctCodesInsee() {
+        $sql = "SELECT DISTINCT comm_insee as value FROM friches WHERE comm_insee IS NOT NULL ORDER BY comm_insee";
+        $stmt = $this->db->query($sql);
+        return $stmt->fetchAll(PDO::FETCH_COLUMN);
+    }
+    
+    /**
      * Récupère une friche par son ID
      * @param int $id
      * @return array|false
@@ -269,48 +313,78 @@ class Friche {
      * Récupère les statistiques globales
      * @return array
      */
-    public function getGlobalStats() {
+    public function getGlobalStats($filters = []) {
         $stats = [];
+        $whereConditions = [];
+        $params = [];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = !empty($whereConditions) ? ' WHERE ' . implode(' AND ', $whereConditions) : '';
         
         // Nombre total de friches
-        $sql = "SELECT COUNT(*) as total FROM friches";
-        $stmt = $this->db->query($sql);
+        $sql = "SELECT COUNT(*) as total FROM friches" . $whereClause;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         $stats['total_friches'] = $stmt->fetchColumn();
         
         // Nombre de communes concernées
-        $sql = "SELECT COUNT(DISTINCT comm_nom) as total FROM friches WHERE comm_nom IS NOT NULL";
-        $stmt = $this->db->query($sql);
+        $whereClauseWithComm = $whereClause ? $whereClause . ' AND comm_nom IS NOT NULL' : ' WHERE comm_nom IS NOT NULL';
+        $sql = "SELECT COUNT(DISTINCT comm_nom) as total FROM friches" . $whereClauseWithComm;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         $stats['total_communes'] = $stmt->fetchColumn();
         
         // Nombre de types de friches
-        $sql = "SELECT COUNT(DISTINCT site_type) as total FROM friches WHERE site_type IS NOT NULL";
-        $stmt = $this->db->query($sql);
+        $whereClauseWithType = $whereClause ? $whereClause . ' AND site_type IS NOT NULL' : ' WHERE site_type IS NOT NULL';
+        $sql = "SELECT COUNT(DISTINCT site_type) as total FROM friches" . $whereClauseWithType;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         $stats['total_types'] = $stmt->fetchColumn();
         
         // Nombre de statuts différents
-        $sql = "SELECT COUNT(DISTINCT site_statut) as total FROM friches WHERE site_statut IS NOT NULL";
-        $stmt = $this->db->query($sql);
+        $whereClauseWithStatut = $whereClause ? $whereClause . ' AND site_statut IS NOT NULL' : ' WHERE site_statut IS NOT NULL';
+        $sql = "SELECT COUNT(DISTINCT site_statut) as total FROM friches" . $whereClauseWithStatut;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         $stats['total_statuts'] = $stmt->fetchColumn();
         
         // Surface totale et moyenne
+        $whereClauseWithSurface = $whereClause ? $whereClause . ' AND unite_fonciere_surface IS NOT NULL AND unite_fonciere_surface > 0' 
+                                                : ' WHERE unite_fonciere_surface IS NOT NULL AND unite_fonciere_surface > 0';
         $sql = "SELECT 
                     SUM(unite_fonciere_surface) as surface_totale,
                     AVG(unite_fonciere_surface) as surface_moyenne
-                FROM friches 
-                WHERE unite_fonciere_surface IS NOT NULL AND unite_fonciere_surface > 0";
-        $stmt = $this->db->query($sql);
+                FROM friches" . $whereClauseWithSurface;
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         $result = $stmt->fetch();
         $stats['surface_totale'] = round($result['surface_totale'] ?? 0);
         $stats['surface_moyenne'] = round($result['surface_moyenne'] ?? 0);
         
         // Commune la plus touchée
+        $whereClauseWithComm2 = $whereClause ? $whereClause . ' AND comm_nom IS NOT NULL' : ' WHERE comm_nom IS NOT NULL';
         $sql = "SELECT comm_nom, COUNT(*) as count 
-                FROM friches 
-                WHERE comm_nom IS NOT NULL 
+                FROM friches" . $whereClauseWithComm2 . "
                 GROUP BY comm_nom 
                 ORDER BY count DESC 
                 LIMIT 1";
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         $result = $stmt->fetch();
         $stats['commune_max'] = $result['comm_nom'] ?? 'N/A';
         $stats['commune_max_count'] = $result['count'] ?? 0;
@@ -320,34 +394,78 @@ class Friche {
     
     /**
      * Récupère la distribution des types de friches
+     * @param array $filters
      * @return array
      */
-    public function getTypeDistribution() {
+    public function getTypeDistribution($filters = []) {
+        $whereConditions = ['site_type IS NOT NULL'];
+        $params = [];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = ' WHERE ' . implode(' AND ', $whereConditions);
+        
         $sql = "SELECT 
                     site_type as label, 
                     COUNT(*) as count 
-                FROM friches 
-                WHERE site_type IS NOT NULL 
+                FROM friches" . $whereClause . "
                 GROUP BY site_type 
                 ORDER BY count DESC";
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         
         return $stmt->fetchAll();
     }
     
     /**
      * Récupère la distribution des statuts
+     * @param array $filters
      * @return array
      */
-    public function getStatusDistribution() {
+    public function getStatusDistribution($filters = []) {
+        $whereConditions = ['site_statut IS NOT NULL'];
+        $params = [];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = ' WHERE ' . implode(' AND ', $whereConditions);
+        
         $sql = "SELECT 
                     site_statut as label, 
                     COUNT(*) as count 
-                FROM friches 
-                WHERE site_statut IS NOT NULL 
+                FROM friches" . $whereClause . "
                 GROUP BY site_statut 
                 ORDER BY count DESC";
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         
         return $stmt->fetchAll();
     }
@@ -355,19 +473,46 @@ class Friche {
     /**
      * Récupère le top N des communes avec le plus de friches
      * @param int $limit
+     * @param array $filters
      * @return array
      */
-    public function getTopCommunes($limit = 10) {
+    public function getTopCommunes($limit = 10, $filters = []) {
+        $whereConditions = ['comm_nom IS NOT NULL'];
+        $params = [':limit' => (int)$limit];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = ' WHERE ' . implode(' AND ', $whereConditions);
+        
         $sql = "SELECT 
                     comm_nom as label, 
                     COUNT(*) as count 
-                FROM friches 
-                WHERE comm_nom IS NOT NULL 
+                FROM friches" . $whereClause . "
                 GROUP BY comm_nom 
                 ORDER BY count DESC 
                 LIMIT :limit";
         $stmt = $this->db->prepare($sql);
-        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        foreach ($params as $key => $value) {
+            if ($key === ':limit') {
+                $stmt->bindValue($key, $value, PDO::PARAM_INT);
+            } else {
+                $stmt->bindValue($key, $value);
+            }
+        }
         $stmt->execute();
         
         return $stmt->fetchAll();
@@ -375,9 +520,31 @@ class Friche {
     
     /**
      * Récupère la distribution de la pollution du sol
+     * @param array $filters
      * @return array
      */
-    public function getSoilPollutionDistribution() {
+    public function getSoilPollutionDistribution($filters = []) {
+        $whereConditions = [];
+        $params = [];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = !empty($whereConditions) ? ' WHERE ' . implode(' AND ', $whereConditions) : '';
+        
         $sql = "SELECT 
                     CASE 
                         WHEN sol_pollution_existe = 'Oui' THEN 'Pollué'
@@ -385,53 +552,120 @@ class Friche {
                         ELSE 'Inconnu'
                     END as label,
                     COUNT(*) as count 
-                FROM friches 
+                FROM friches" . $whereClause . "
                 GROUP BY sol_pollution_existe 
                 ORDER BY count DESC";
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         
         return $stmt->fetchAll();
     }
     
     /**
      * Récupère la distribution de la pollution des bâtiments
+     * @param array $filters
      * @return array
      */
-    public function getBuildingPollutionDistribution() {
+    public function getBuildingPollutionDistribution($filters = []) {
+        $whereConditions = ['bati_pollution IS NOT NULL'];
+        $params = [];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = ' WHERE ' . implode(' AND ', $whereConditions);
+        
         $sql = "SELECT 
                     bati_pollution as label, 
                     COUNT(*) as count 
-                FROM friches 
-                WHERE bati_pollution IS NOT NULL 
+                FROM friches" . $whereClause . "
                 GROUP BY bati_pollution 
                 ORDER BY count DESC";
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         
         return $stmt->fetchAll();
     }
     
     /**
      * Récupère la distribution des types de propriétaires
+     * @param array $filters
      * @return array
      */
-    public function getOwnerTypeDistribution() {
+    public function getOwnerTypeDistribution($filters = []) {
+        $whereConditions = ['proprio_personne IS NOT NULL'];
+        $params = [];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = ' WHERE ' . implode(' AND ', $whereConditions);
+        
         $sql = "SELECT 
-                    proprio_type as label, 
+                    proprio_personne as label, 
                     COUNT(*) as count 
-                FROM friches 
-                WHERE proprio_type IS NOT NULL 
-                GROUP BY proprio_type 
+                FROM friches" . $whereClause . "
+                GROUP BY proprio_personne 
                 ORDER BY count DESC";
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         
         return $stmt->fetchAll();
     }
     
     /**
      * Récupère la distribution des surfaces (pour histogramme)
+     * @param array $filters
      * @return array
      */
-    public function getSurfaceDistribution() {
+    public function getSurfaceDistribution($filters = []) {
+        $whereConditions = ['unite_fonciere_surface IS NOT NULL', 'unite_fonciere_surface > 0'];
+        $params = [];
+        
+        // Construire les conditions WHERE selon les filtres
+        if (!empty($filters['comm_nom'])) {
+            $whereConditions[] = "comm_nom = :comm_nom";
+            $params[':comm_nom'] = $filters['comm_nom'];
+        } elseif (!empty($filters['comm_insee'])) {
+            // Vérifier si c'est un filtre de département
+            if (strpos($filters['comm_insee'], 'dept:') === 0) {
+                $deptCode = substr($filters['comm_insee'], 5);
+                $whereConditions[] = "comm_insee LIKE :comm_insee";
+                $params[':comm_insee'] = $deptCode . '%';
+            } else {
+                $whereConditions[] = "comm_insee = :comm_insee";
+                $params[':comm_insee'] = $filters['comm_insee'];
+            }
+        }
+        
+        $whereClause = ' WHERE ' . implode(' AND ', $whereConditions);
+        
         $sql = "SELECT 
                     CASE 
                         WHEN unite_fonciere_surface < 1000 THEN '0-1k'
@@ -442,8 +676,7 @@ class Friche {
                         ELSE '100k+'
                     END as label,
                     COUNT(*) as count 
-                FROM friches 
-                WHERE unite_fonciere_surface IS NOT NULL AND unite_fonciere_surface > 0
+                FROM friches" . $whereClause . "
                 GROUP BY label 
                 ORDER BY 
                     CASE label
@@ -454,7 +687,8 @@ class Friche {
                         WHEN '50k-100k' THEN 5
                         WHEN '100k+' THEN 6
                     END";
-        $stmt = $this->db->query($sql);
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
         
         return $stmt->fetchAll();
     }

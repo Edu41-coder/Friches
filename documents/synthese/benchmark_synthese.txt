@@ -1,0 +1,1466 @@
+================================================================================
+                    BENCHMARK SYNTHÉTISÉ - APPLICATION FRICHES
+                  Analyse comparative des solutions et technologies
+================================================================================
+
+Date : 21 novembre 2025
+Portée : Synthèse de 3 benchmarks (veille technologique, comparatif solutions,
+         analyse fonctionnelle)
+Objectif : Guider les choix techniques et stratégiques du projet
+
+
+================================================================================
+                        I. OBJECTIFS DU BENCHMARK
+================================================================================
+
+Ce document synthétise trois analyses complémentaires pour orienter le 
+développement de l'Application Friches :
+
+1. VEILLE TECHNOLOGIQUE
+   • Identifier les technologies cartographiques et de visualisation
+   • Évaluer les performances et limitations
+   • Déterminer les choix adaptés au MVP et à la scalabilité
+
+2. BENCHMARK SOLUTIONS EXISTANTES
+   • Analyser les plateformes comparables (Cartofriches, SOGEFI, etc.)
+   • Comparer fonctionnalités et approches
+   • Identifier les meilleures pratiques
+
+3. ANALYSE FONCTIONNELLE
+   • Définir les critères d'évaluation (standardisation, qualité, UX)
+   • Positionner l'Application Friches dans l'écosystème
+   • Dégager des recommandations pragmatiques
+
+
+================================================================================
+              II. ÉCOSYSTÈME & SOURCES DE DONNÉES FRICHES
+================================================================================
+
+A. SOURCES OUVERTES / PUBLIQUES
+--------------------------------
+
+DATA.GOUV.FR
+• Catalogues territoriaux officiels
+• Jeux de données ministères et collectivités
+• Licence Ouverte 2.0 (réutilisation libre avec attribution)
+
+BASIAS (BRGM)
+• Base des Anciens Sites Industriels et Activités de Service
+• Inventaire historique des sites industriels (>300 000 sites)
+• Données de localisation, activité, période exploitation
+• URL : https://basias.brgm.fr/
+
+BASOL (Ministère Transition Écologique)
+• Base des sites et sols pollués (ou potentiellement pollués)
+• Sites nécessitant action publique
+• Statuts, diagnostics pollution, plans de gestion
+• URL : https://basol.developpement-durable.gouv.fr/
+
+CARTOFRICHES (CEREMA)
+• Plateforme nationale de référence des friches
+• Géolocalisation CNIG existante
+• Fiches descriptives standardisées
+• Contribution collaborative (collectivités)
+• URL : https://cartofriches.cerema.fr/
+
+OPENSTREETMAP (OSM)
+• Fond de plan cartographique libre
+• POI (Points of Interest) contextuels
+• Licence ODbL (attribution requise)
+• Tuiles raster gratuites (respect fair use)
+
+IGN / GÉOPORTAIL
+• Fonds de plan raster haute qualité
+• Orthophotos aériennes
+• Licences spécifiques selon usage
+• URL : https://geoservices.ign.fr/
+
+INSEE / SIRENE
+• Référentiels communes (codes INSEE)
+• Données entreprises et établissements
+• Base Adresse Nationale (BAN) pour géocodage
+
+B. SOURCES INTERNES / PARTENAIRES
+----------------------------------
+
+INVENTAIRES LOCAUX
+• Données collectivités (Régions, EPCI, communes)
+• Formats variés : CSV, Excel, SHP
+• Hétérogénéité structure et qualité
+→ Nécessité : gabarits CSV standardisés + dictionnaire données
+
+ÉTUDES ENVIRONNEMENTALES
+• Campagnes ponctuelles bureaux d'études
+• Diagnostics pollution sol/bâtiments
+• Rapports PDF à structurer
+
+DONNÉES CADASTRALES
+• Parcelles, propriétaires, surfaces
+• Accès via conventions (DGFIP)
+• Géoréférencement WGS84
+
+DREAL RÉGIONALES
+• Inventaires régionaux friches
+• Données de suivi projets requalification
+• Formats à normaliser
+
+C. RECOMMANDATIONS DONNÉES
+---------------------------
+
+1. Diversifier les sources pour enrichissement :
+   • BASIAS/BASOL : historique industriel + pollution
+   • Cartofriches : géolocalisation + fiches
+   • Cadastre : surfaces précises + propriétaires
+   • Collectivités : statuts + projets en cours
+
+2. Définir gabarit CSV + dictionnaire de données :
+   • Champs obligatoires vs facultatifs
+   • Formats standardisés (dates, coordonnées, énumérations)
+   • Règles de validation (contraintes, valeurs possibles)
+
+3. Automatiser qualité géographique (QA) :
+   • Vérifier bbox France métropolitaine
+   • Contrôler EPSG:4326 (WGS84)
+   • Détecter aberrations (coordonnées nulles, hors territoire)
+   • Dashboard qualité : complétude, fraîcheur, géolocalisation
+
+
+================================================================================
+            III. SOLUTIONS COMPARABLES - ANALYSE DÉTAILLÉE
+================================================================================
+
+A. CARTOFRICHES (CEREMA)
+-------------------------
+
+DESCRIPTION
+• Plateforme nationale officielle de visualisation des friches
+• Portée par le Cerema et partenaires institutionnels
+• Géostandard CNIG existant mais lettrage améliorable
+
+POINTS FORTS
+✓ Référence publique reconnue
+✓ Standardisation géographique CNIG
+✓ Intégration native dans outils métiers collectivités
+✓ Contribution collaborative collectivités
+✓ Fiches descriptives complètes
+✓ Historique et traçabilité
+
+LIMITES IDENTIFIÉES
+✗ Analytics limitée (pas de graphiques statistiques avancés)
+✗ Enrichissement automatique faible (risques, socio-éco)
+✗ Détection automatique friches/vacants : non
+✗ Interface expérience utilisateur améliorable
+✗ Pas de scoring/priorisation multi-critères
+✗ API publique limitée
+
+POSITIONNEMENT
+• Référentiel institutionnel (vocation catalogue)
+• Notre application : vocation analytique et aide décision avancée
+
+B. SOGEFI (EDITEUR SIG)
+------------------------
+
+DESCRIPTION
+• Éditeur SIG intégrant Cartofriches dans plateforme 
+  "Mon Territoire Carto"
+• Couches activables API et outils SIG métiers
+• Intégration native outils collectivités
+
+POINTS FORTS
+✓ Intégration professionnelle SIG
+✓ Outils analyse spatiale avancés
+✓ Support éditeur et formations
+
+LIMITES
+✗ Solution propriétaire (licence commerciale)
+✗ Coût pour collectivités
+✗ Dépendance éditeur (vendor lock-in)
+
+URL : https://www.sogefi-sig.com/
+
+C. SIT@DEL (DONNÉES PERMIS CONSTRUIRE)
+---------------------------------------
+
+DESCRIPTION
+• Base nationale permis de construire/démolir
+• Utilisée pour détecter automatiquement friches en cours 
+  de réaffectation
+
+USAGE
+• Croiser données Cartofriches + autorisations urbanisme
+• Identifier sites en cours de requalification
+• Automatiser mise à jour statuts
+
+URL : https://www.statistiques.developpement-durable.gouv.fr/
+
+D. CEREMA - HACKATHON RST ANALYTICS 2018
+-----------------------------------------
+
+DESCRIPTION
+• Prototype détection friches industrielles par croisement 
+  bases publiques
+• Sources : BASIAS, BASOL, ICPE, SIRENE
+• Approche semi-automatisée pré-recensement par agrégation multi-source
+
+INNOVATION
+✓ Première approche automatisée pré-recensement
+✓ Croisement intelligent bases hétérogènes
+✓ Réduction temps identification manuelle
+
+URL : https://www.cerema.fr/fr/actualites/challenge-rst-analytics-2018-
+      cerema-s-implique-detection
+
+E. SONG ET AL., 2022 - MACHINE LEARNING
+----------------------------------------
+
+DESCRIPTION
+• Méthode IA croisant occupation du sol + données activité + 
+  imagerie Street View
+• Détection automatique friches urbaines abandonnées
+• Précision 84,9% sur sites identifiés
+
+TECHNOLOGIE
+• Machine learning (classification supervisée)
+• Features : données cadastre, occupation sol, photos terrain
+• Validation terrain croisée
+
+APPLICABILITÉ
+→ Inspirant pour phase R&D (détection automatique enrichie)
+→ Nécessite dataset d'entraînement conséquent
+
+URL : https://www.researchgate.net/publication/359434888_
+      Identifying_urban_candidate_brownfield_sites
+
+F. FIXMYSTREET (UK)
+-------------------
+
+DESCRIPTION
+• Plateforme citoyenne signalement anomalies urbaines
+• Modèle signalement direct + suivi traitement
+• Transposable à Cartofriches pour corrections/ajouts
+
+MODÈLE
+✓ Participation citoyenne active
+✓ Workflow validation modération
+✓ Suivi public état traitement
+
+APPLICABILITÉ
+→ Module "Signaler une friche" dans notre application
+→ Workflow validation admin avant publication
+
+URL : https://www.fixmystreet.com/
+
+G. ORDNANCE SURVEY (UK)
+-----------------------
+
+DESCRIPTION
+• Institut géographique national UK
+• Standard national obligatoire pour données géographiques
+• Flux automatisés données cadastre/risques
+
+POINTS FORTS
+✓ Très homogène qualité données
+✓ Excellent contrôle qualité automatisé
+✓ Flux automatisés mises à jour
+
+LEÇONS
+→ Importance standardisation nationale forte
+→ Automatisation QA dès ingestion données
+
+H. KADASTER (PAYS-BAS)
+----------------------
+
+DESCRIPTION
+• Service cadastre néerlandais
+• Données très strictes et complètes
+• Historique complet sites cadastre/risques
+
+POINTS FORTS
+✓ Couplage cadastre + pollution forte
+✓ Indicateurs territoriaux riches
+
+I. PROPTECH FR (KINAXIA, VIZZIA)
+---------------------------------
+
+DESCRIPTION
+• Solutions SaaS françaises immobilier/foncier
+• Scoring faisabilité, risques pollution
+
+CARACTÉRISTIQUES
+• Variable selon sources utilisées
+• Partiellement automatisé
+• UX très orientée décision
+• Scores quantitatifs (risques, faisabilité)
+
+LIMITES
+✗ Variable selon qualité sources
+✗ Hors périmètre service public (modèle commercial)
+
+J. CITY OF CHICAGO (USA)
+------------------------
+
+DESCRIPTION
+• Portail open data robuste
+• Données municipales automatisées (imagerie)
+• Clear dashboards publics
+
+POINTS FORTS
+✓ Très bonne qualité données municipales
+✓ Automatisation forte (imagerie satellite)
+✓ Dashboards citoyens transparents
+✓ API transparente (JSON, GeoJSON, CSV)
+
+LEÇONS
+→ Transparence et qualité data = clés adoption
+→ Dashboards publics renforcent confiance
+
+K. SOLUTIONS IA (UP42, GOOGLE EARTH ENGINE)
+--------------------------------------------
+
+DESCRIPTION
+• Plateformes analyse imagerie satellite
+• Détection automatique changements occupation sol
+• Machine learning spatial
+
+CARACTÉRISTIQUES
+• Tech orientée data brute (imagerie)
+• Dépend sources qualité variables
+• Hors périmètre immédiat (mais inspirant R&D)
+
+APPLICABILITÉ
+→ Phase 4 roadmap (innovation & expansion)
+→ Détection automatique friches par satellite
+→ Suivi temporel évolution sites
+
+
+================================================================================
+              IV. BENCHMARK FONCTIONNEL - GRILLE D'ANALYSE
+================================================================================
+
+CRITÈRES D'ÉVALUATION (16 dimensions)
+--------------------------------------
+
+1. STANDARDISATION DES DONNÉES
+   • Cartofriches : ⚫ Géostandard CNIG existant mais améliorable
+   • Ordnance Survey : 🟢 Standard national obligatoire
+   • Kadaster : 🟢 Très strict et complet
+   • PropTech FR : 🔴 Variable selon sources
+   • City of Chicago : 🟢 Standard interne robuste
+   • Solutions IA : 🔴 Hors périmètre initial
+
+2. QUALITÉ / COMPLÉTUDE DES DONNÉES
+   • Cartofriches : ⚫ Forte variation territoriale
+   • Ordnance Survey : 🟢 Très homogène
+   • Kadaster : 🟢 Excellent contrôle qualité
+   • PropTech FR : ⚫ Variable selon sources
+   • City of Chicago : 🟢 Très bonne (données municipales)
+   • Solutions IA : 🔴 Dépend données sources
+
+3. MISES À JOUR AUTOMATISÉES
+   • Cartofriches : 🔴 Principalement manuel/collaboratif
+   • Ordnance Survey : 🟢 Flux automatisés
+   • Kadaster : 🟢 Très automatisé
+   • PropTech FR : ⚫ Partiellement automatisé
+   • City of Chicago : 🟢 Automatisé (imagerie)
+   • Solutions IA : 🟢 Automatisation forte (imagerie)
+
+4. ENRICHISSEMENT AUTOMATIQUE (RISQUES, SOCIO-ÉCO)
+   • Cartofriches : ⚫ Limité (faible auto-enrichissement)
+   • Ordnance Survey : 🟢 Enrichissements multiples
+   • Kadaster : 🟢 Couplage avec cadastre/risques
+   • PropTech FR : 🟢 Très avancé via IA
+   • City of Chicago : ⚫ Partiel
+   • Solutions IA : 🟢 Très avancé via IA (satellite)
+
+5. DÉTECTION AUTOMATIQUE FRICHES/VACANTS
+   • Cartofriches : 🔴 Non
+   • Ordnance Survey : 🔴 Non
+   • Kadaster : 🔴 Non
+   • PropTech FR : 🔴 Rare
+   • City of Chicago : ⚫ Semi-automatisé
+   • Solutions IA : 🟢 Détection automatisée satellite
+
+6. INTERFACE & EXPÉRIENCE UTILISATEUR
+   • Cartofriches : ⚫ Fonctionnelle mais améliorable
+   • Ordnance Survey : 🟢 Interface moderne
+   • Kadaster : 🟢 SIG ergonomique
+   • PropTech FR : 🟢 Très UX et orientée décision
+   • City of Chicago : 🟢 Très lisible
+   • Solutions IA : ⚫ Tech orientée data brute
+
+7. AIDE À LA DÉCISION / SCORING
+   • Cartofriches : 🔴 Pas de score national
+   • Ordnance Survey : ⚫ Analytics basiques
+   • Kadaster : ⚫ Indicateurs territoriaux
+   • PropTech FR : 🟢 Scores, risques, faisabilité
+   • City of Chicago : ⚫ Infos de contexte
+   • Solutions IA : 🔴 Pas de scoring "métiers"
+
+8. VISION TEMPORELLE / HISTORIQUE SITES
+   • Cartofriches : 🔴 Très limitée
+   • Ordnance Survey : ⚫ Partielle
+   • Kadaster : 🟢 Historique complet
+   • PropTech FR : ⚫ Variable
+   • City of Chicago : ⚫ Partiel
+   • Solutions IA : 🟢 Forte (séries temporelles satellites)
+
+9. DASHBOARD STRATÉGIQUE (KPI, SUIVI FRICHES)
+   • Cartofriches : 🔴 Inexistant
+   • Ordnance Survey : 🟢 Tableaux stratégiques
+   • Kadaster : 🟢 Indicateurs nationaux
+   • PropTech FR : 🔴 Rare
+   • City of Chicago : 🟢 Clear dashboards publics
+   • Solutions IA : 🔴 Pas un objectif "métier"
+
+10. INTEROPÉRABILITÉ / API
+    • Cartofriches : ⚫ API existante mais limitée
+    • Ordnance Survey : 🟢 API robuste & normalisée
+    • Kadaster : 🟢 Interop forte
+    • PropTech FR : 🟢 Forte intégration SIG
+    • City of Chicago : 🟢 API transparente
+    • Solutions IA : ⚫ API technique mais brute
+
+11. PILOTAGE CENTRALISÉ (POLITIQUE FONCIÈRE)
+    • Cartofriches : ⚫ Potentiel, pas exploité
+    • Ordnance Survey : 🟢 Très mature
+    • Kadaster : 🟢 Très mature
+    • PropTech FR : 🔴 Hors périmètre
+    • City of Chicago : 🟢 Gouvernance locale solide
+    • Solutions IA : 🔴 Hors périmètre
+
+12. PARTICIPATION / SIGNALEMENT
+    • Cartofriches : ⚫ Contribution collectivités
+    • Ordnance Survey : 🔴 Limité
+    • Kadaster : 🔴 Limité
+    • PropTech FR : 🔴 Non
+    • City of Chicago : 🟢 Forte participation citoyenne
+    • Solutions IA : 🔴 Non
+
+
+LÉGENDE
+-------
+🟢 Excellent / Très avancé / Pleinement implémenté
+⚫ Moyen / Partiel / Améliorable
+🔴 Faible / Absent / Non applicable
+
+
+================================================================================
+            V. BENCHMARK TECHNIQUE - CARTOGRAPHIE
+================================================================================
+
+A. LEAFLET.JS
+-------------
+
+DESCRIPTION
+• Bibliothèque JavaScript open source légère
+• Référence pour cartes web interactives
+• Plugins riches (MarkerCluster, Draw, etc.)
+
+POINTS FORTS
+✓ Léger (~40 KB minifié)
+✓ Écosystème plugins très riche
+✓ Compatible tuiles OSM gratuites
+✓ Clustering efficace >500 points (MarkerCluster)
+✓ Courbe d'apprentissage faible
+✓ Documentation excellente
+✓ Communauté active
+
+LIMITES
+✗ Pas de rendu WebGL natif (raster tiles uniquement)
+✗ Vector tiles via plugins (moins performant que natif)
+✗ Performances limitées > 10 000 points sans clustering
+
+RECOMMANDATION
+🟢 RECOMMANDÉ POUR MVP
+• Parfait équilibre simplicité/fonctionnalités
+• Déploiement rapide
+• Maintien facile
+
+APPLICABILITÉ APPLICATION FRICHES
+✓ Actuellement utilisé (bon choix)
+✓ Clustering actif pour zones denses
+✓ Compatible tous besoins MVP et phase 2
+
+B. MAPBOX GL JS
+---------------
+
+DESCRIPTION
+• Bibliothèque cartographie moderne basée WebGL
+• Vector tiles haute performance
+• Styles personnalisables avancés
+
+POINTS FORTS
+✓ Rendu WebGL natif (performances excellentes)
+✓ Vector tiles (zoom fluide, styles dynamiques)
+✓ Effets 3D et animations
+✓ Design moderne et élégant
+
+LIMITES
+✗ Nécessite compte Mapbox (tokens)
+✗ Conditions de licence restrictives (changements 2020)
+✗ Coût si dépassement quota gratuit
+✗ Bundle plus lourd que Leaflet
+
+RECOMMANDATION
+⚫ À CONSIDÉRER PHASE 2+
+• Si besoins visualisation avancée (3D, animations)
+• Si budget pour licences
+• Si > 50 000 marqueurs à afficher
+
+APPLICABILITÉ APPLICATION FRICHES
+→ Trajectoire possible si :
+  • Besoin visualisation 3D bâtiments
+  • Très gros volumes de données (> 100k friches)
+  • Budget disponible pour licences
+
+C. OPENLAYERS
+-------------
+
+DESCRIPTION
+• Bibliothèque cartographie JavaScript puissante
+• Gestion projections complexes
+• Intégration WMS/WFS avancée
+
+POINTS FORTS
+✓ Très puissant (projections, vecteurs, raster)
+✓ Intégration services OGC (WMS, WFS, WCS)
+✓ Gestion projections multiples (pas que Web Mercator)
+✓ Pas de dépendance serveur tiers
+
+LIMITES
+✗ Courbe d'apprentissage élevée
+✗ API plus complexe que Leaflet
+✗ Bundle plus lourd
+✗ Moins de plugins communautaires
+
+RECOMMANDATION
+⚫ POUR CAS AVANCÉS SPÉCIFIQUES
+• Si besoins projections Lambert93 etc.
+• Si intégration services OGC complexes
+• Si besoins analyse spatiale côté client
+
+APPLICABILITÉ APPLICATION FRICHES
+→ Pas nécessaire pour MVP
+→ Envisageable si intégration WMS DREAL obligatoire
+
+D. AUTRES SOLUTIONS
+-------------------
+
+UMAP
+• Cartes simples sur base OSM
+• 🟢 Simplicité extrême
+• 🔴 Fonctionnalités limitées (pas de backend)
+• → Pas adapté (trop basique)
+
+KEPLER.GL (UBER)
+• Exploration visuelle client-side
+• 🟢 Dataviz avancée et animations
+• 🔴 Pas de backend, fichiers locaux
+• → Intéressant pour prototypage rapide, pas production
+
+GOOGLE MAPS
+• Solution propriétaire grand public
+• 🟢 UX familière, géocodage excellent
+• 🔴 Coût élevé, conditions restrictives
+• → Pas recommandé (coût + vendor lock-in)
+
+E. RECOMMANDATION SYNTHÉTIQUE CARTO
+------------------------------------
+
+MVP (ACTUEL - PHASE 1-2)
+→ Leaflet.js + MarkerCluster + Leaflet.draw
+  Raisons : léger, simple, gratuit, communauté
+
+PHASE 3 (SI BESOINS AVANCÉS)
+→ Évaluer Mapbox GL JS si :
+  • > 100 000 friches à afficher
+  • Besoins 3D/animations
+  • Budget licences disponible
+
+PHASE 4 (INNOVATION)
+→ Intégration possible Kepler.gl pour exploration data
+
+
+================================================================================
+          VI. BENCHMARK TECHNIQUE - GRAPHIQUES & ANALYTICS
+================================================================================
+
+A. CHART.JS
+-----------
+
+DESCRIPTION
+• Bibliothèque JavaScript graphiques simple et élégante
+• 8 types de graphiques (line, bar, pie, doughnut, radar, etc.)
+• Canvas-based (HTML5 Canvas API)
+
+POINTS FORTS
+✓ Très simple à utiliser
+✓ Léger (~60 KB minifié)
+✓ Documentation claire
+✓ Communauté active
+✓ Responsive par défaut
+✓ Animations fluides
+
+LIMITES
+✗ Performances limitées > 10 000 points
+✗ Charts complexes (multi-axes) moins ergonomiques
+✗ Personnalisation avancée peut être verbale
+
+RECOMMANDATION
+🟢 ADAPTÉ MVP ET PHASE 2
+• Parfait pour dashboards standards
+• Équilibre simplicité/fonctionnalités
+• Actuellement utilisé dans l'application ✓
+
+APPLICABILITÉ APPLICATION FRICHES
+✓ Utilisé actuellement (bon choix)
+✓ Suffit amplement pour analytics MVP :
+  • Répartition types/statuts (pie/doughnut)
+  • Top communes (bar horizontal)
+  • Distribution surfaces (histogram)
+  • Pollution sol/bâtiments (bar)
+  • Propriétaires (doughnut)
+
+B. APEXCHARTS
+-------------
+
+DESCRIPTION
+• Bibliothèque JavaScript graphiques modernes
+• Plus riche que Chart.js
+• Interactions avancées (zoom, pan, annotations)
+
+POINTS FORTS
+✓ Interactions riches (drill-down, brush)
+✓ Séries multiples facilitées
+✓ Annotations et marqueurs
+✓ Thèmes prédéfinis élégants
+✓ Exports PNG/SVG/CSV intégrés
+
+LIMITES
+✗ Bundle plus lourd (~150 KB)
+✗ API plus complexe que Chart.js
+✗ Moins de communauté que Chart.js
+
+RECOMMANDATION
+⚫ OPTION PHASE 2-3 SI BESOINS AVANCÉS
+• Si dashboards interactifs poussés
+• Si drill-down multi-niveaux
+• Si exports graphiques requis
+
+APPLICABILITÉ APPLICATION FRICHES
+→ Envisageable si :
+  • Dashboards analytics enrichis (phase 3)
+  • Analyses temporelles évolution friches
+  • Exports rapports automatisés
+
+C. APACHE ECHARTS
+-----------------
+
+DESCRIPTION
+• Bibliothèque visualisation données très complète (Apache)
+• Palette graphiques la plus large
+• Performances excellentes (Canvas + SVG)
+
+POINTS FORTS
+✓ Palette très large (>20 types graphiques)
+✓ Performances excellentes (>100k points)
+✓ Cartes choroplèthes intégrées
+✓ Thèmes riches et professionnels
+✓ Support i18n natif
+
+LIMITES
+✗ Bundle lourd (~300 KB full, réductible via tree-shaking)
+✗ API très vaste (courbe apprentissage)
+✗ Documentation en anglais moins complète
+
+RECOMMANDATION
+⚫ POUR DASHBOARDS TRÈS POUSSÉS (PHASE 3-4)
+• Si besoins graphiques complexes (Sankey, Graph, etc.)
+• Si gros volumes de données temps réel
+• Si cartes choroplèthes (régions colorées)
+
+APPLICABILITÉ APPLICATION FRICHES
+→ Intéressant pour phase 4 :
+  • Cartes choroplèthes (densité friches par département)
+  • Graphiques relations (flux projets requalification)
+  • Dashboards temps réel
+
+D. D3.JS
+--------
+
+DESCRIPTION
+• Bibliothèque bas niveau manipulation DOM basée sur données
+• Extrêmement flexible et puissante
+• Base de nombreuses autres libs
+
+POINTS FORTS
+✓ Flexibilité totale (custom charts possibles)
+✓ Performance maximale si bien utilisé
+✓ Communauté immense (exemples)
+
+LIMITES
+✗ Courbe d'apprentissage très élevée
+✗ Pas de graphiques "prêts à l'emploi"
+✗ Développement beaucoup plus long
+
+RECOMMANDATION
+🔴 PAS RECOMMANDÉ POUR MVP
+• Trop complexe pour besoins actuels
+• Chart.js ou ApexCharts suffisent largement
+
+E. RECOMMANDATION SYNTHÉTIQUE GRAPHIQUES
+-----------------------------------------
+
+MVP (ACTUEL - PHASE 1-2)
+→ Chart.js 4.4.0 ✓
+  Raisons : simple, léger, suffit amplement
+
+PHASE 2-3 (ANALYTICS ENRICHIS)
+→ Conserver Chart.js OU migrer ApexCharts si :
+  • Besoins interactions drill-down
+  • Exports graphiques automatisés
+  • Dashboards multi-niveaux
+
+PHASE 4 (DASHBOARDS AVANCÉS)
+→ Évaluer Apache ECharts si :
+  • Cartes choroplèthes départements/régions
+  • Graphiques relations/flux complexes
+  • Très gros volumes temps réel
+
+
+================================================================================
+              VII. BACKEND & ARCHITECTURE - RECOMMANDATIONS
+================================================================================
+
+A. ARCHITECTURE PHP ACTUELLE
+-----------------------------
+
+ÉTAT ACTUEL
+• PHP 8+ avec architecture MVC légère custom
+• PDO pour MariaDB
+• Structure :
+  - app/models/ : logique métier et accès données
+  - app/views/ : templates HTML/PHP
+  - app/controllers/ : contrôleurs routing
+  - config/ : configuration BDD
+  - public/ : assets (CSS, JS) + point d'entrée
+
+POINTS FORTS
+✓ Simplicité déploiement (LAMP/XAMPP)
+✓ Contrôle fin de l'architecture
+✓ Faible overhead (pas de framework lourd)
+✓ Courbe d'apprentissage rapide équipe
+✓ Performance correcte pour MVP
+
+LIMITES
+✗ Structuration limitée à long terme (scaling)
+✗ Pas de tooling avancé (migrations, seeds, CLI)
+✗ Sécurité à maintenir manuellement (CSRF, etc.)
+✗ Tests unitaires plus complexes à mettre en place
+
+RECOMMANDATION MVP (PHASE 1-2)
+🟢 CONSERVER MVC LÉGER ACTUEL
+• Adapté parfaitement au MVP
+• Ne pas sur-ingéniérer trop tôt
+• Focus sur fonctionnalités métier
+
+RECOMMANDATION PHASE 3+ (INDUSTRIALISATION)
+⚫ ENVISAGER MIGRATION FRAMEWORK PHP
+Si équipe grandit OU besoins complexifient :
+
+Option 1 : Laravel
+• 🟢 Écosystème très riche (ORM Eloquent, migrations, queues)
+• 🟢 Tooling excellent (Artisan CLI, testing)
+• 🟢 Sécurité built-in (CSRF, validation, auth)
+• 🟢 Communauté immense
+• 🔴 Courbe d'apprentissage si équipe pas familière
+• 🔴 Overhead performance (acceptable pour la plupart des cas)
+
+Option 2 : Symfony
+• 🟢 Architecture très structurée (bundles, services)
+• 🟢 Flexible et modulaire
+• 🟢 Performance excellente
+• 🟢 Adapté projets complexes long terme
+• 🔴 Courbe d'apprentissage élevée
+• 🔴 Plus verbeux que Laravel
+
+Recommandation : Laravel si équipe junior/mixte
+                 Symfony si équipe senior + besoins complexes
+
+B. BASE DE DONNÉES SPATIALE
+----------------------------
+
+ÉTAT ACTUEL
+• MariaDB 10.x
+• Stockage lat/lon en DECIMAL
+• Requêtes filtres standards (=, LIKE, BETWEEN)
+
+FONCTIONNEMENT ACTUEL
+✓ OK pour points simples + filtres attributaires
+✓ Performance acceptable < 50 000 friches
+✓ Pas de besoins spatial avancés immédiat
+
+LIMITES MARIADB SPATIAL
+✗ Pas de support PostGIS (fonctions spatiales limitées)
+✗ Pas d'index R-Tree performants
+✗ Requêtes spatiales complexes (intersections, buffers) limitées
+✗ Pas de support natif GeoJSON optimisé
+
+RECOMMANDATION
+
+MVP (PHASE 1-2)
+→ CONSERVER MARIADB
+  • Suffit amplement pour besoins actuels
+  • Ne pas complexifier prématurément
+
+PHASE 2-3 (ANALYSES SPATIALES)
+→ MIGRER POSTGRESQL + POSTGIS
+  Si besoins émergent :
+  • Requêtes spatiales (intersection polygones/points)
+  • Buffers (zones autour friches)
+  • Calculs distances (friches proches infrastructures)
+  • Analyses par bounding box (optimisées)
+  • Export GeoJSON natif performant
+
+AVANTAGES POSTGIS
+✓ Fonctions spatiales complètes (>300 fonctions)
+✓ Index R-Tree très performants (GIST)
+✓ Support complet OGC (WKT, WKB, GeoJSON)
+✓ Requêtes spatiales standards SQL
+✓ Performance excellente gros volumes
+
+MIGRATION MARIADB → POSTGRESQL
+• Relativement simple (SQL standard)
+• PDO compatible (changement DSN uniquement)
+• Scripts migration à prévoir
+• Tests complets requis
+
+ALTERNATIVE LÉGÈRE : SPATIALITE
+• Extension SQLite pour spatial
+• Mono-fichier (pas de serveur)
+• 🟢 Simplicité extrême
+• 🔴 Pas adapté multi-utilisateurs simultanés
+• → Pas recommandé pour production
+
+C. API REST
+-----------
+
+ÉTAT ACTUEL
+• Endpoints JSON custom (getDataJson, getChartDataJson, etc.)
+• Pas de structure REST stricte
+• Authentification session PHP
+
+RECOMMANDATION PHASE 2-3
+→ STRUCTURER API REST PROPRE
+  • Routes RESTful standards :
+    GET    /api/v1/friches          → Liste paginée
+    GET    /api/v1/friches/{id}     → Détail friche
+    POST   /api/v1/friches          → Créer friche (admin)
+    PUT    /api/v1/friches/{id}     → Modifier friche (admin)
+    DELETE /api/v1/friches/{id}     → Supprimer friche (admin)
+    GET    /api/v1/stats            → Statistiques globales
+    GET    /api/v1/charts/{type}    → Données graphiques
+
+  • Authentification : JWT ou OAuth2 (phase 3)
+  • Rate limiting : protéger API abus
+  • Documentation : OpenAPI/Swagger
+  • Versioning : /api/v1/ pour rétrocompatibilité
+
+
+================================================================================
+        VIII. PERFORMANCE, HÉBERGEMENT, OPTIMISATIONS
+================================================================================
+
+A. OPTIMISATIONS CARTOGRAPHIE
+------------------------------
+
+CLUSTERING
+• Actif actuellement : Leaflet.markercluster ✓
+• Seuil recommandé : >500 marqueurs
+• Configuration optimale :
+  - maxClusterRadius: 80 (équilibre cluster/détail)
+  - disableClusteringAtZoom: 15 (détail à fort zoom)
+  - spiderfyOnMaxZoom: true (éviter surcharge visuelle)
+
+LAZY LOADING PAR BOUNDING BOX
+• Non implémenté actuellement
+• Recommandation PHASE 2 si >10 000 friches :
+  - Charger seulement friches dans zone visible carte
+  - Requête SQL avec WHERE lat BETWEEN ... AND lon BETWEEN ...
+  - Recharger lors déplacement/zoom carte
+  - Événement Leaflet : map.on('moveend', loadVisibleFriches)
+
+SIMPLIFICATION GÉOMÉTRIES (si polygones phase 3+)
+• Utiliser Douglas-Peucker pour réduire points
+• Turf.js côté client ou PostGIS côté serveur
+• Réduire précision coordonnées (6 décimales suffisent)
+
+B. OPTIMISATIONS BACKEND
+-------------------------
+
+CACHE CÔTÉ SERVEUR
+• Recommandation PHASE 2 :
+  - Mettre en cache endpoints JSON/GeoJSON
+  - Redis ou fichiers cache (APCu)
+  - Invalidation lors modification données
+  - TTL adapté (ex: 5 min pour stats, 1h pour carte complète)
+
+EXEMPLE CACHE REDIS
+```php
+// Vérifier cache
+$cacheKey = 'friches_geojson_' . md5(json_encode($filters));
+$cached = $redis->get($cacheKey);
+if ($cached) {
+    return json_decode($cached);
+}
+
+// Sinon calculer et mettre en cache
+$data = $model->findAll($filters);
+$redis->setex($cacheKey, 3600, json_encode($data)); // 1h
+return $data;
+```
+
+INDEX SQL
+• Actuellement : à vérifier
+• Index recommandés :
+  - INDEX sur comm_insee (filtres fréquents)
+  - INDEX sur site_type (filtres fréquents)
+  - INDEX sur site_statut (filtres fréquents)
+  - INDEX sur (latitude, longitude) si requêtes spatiales
+  - INDEX composite sur (comm_insee, site_type) si combinaisons fréquentes
+
+PAGINATION SERVEUR
+• Déjà implémenté ✓ (LIMIT/OFFSET)
+• Vérifier performance > 10 000 lignes
+• Alternative OFFSET : cursor-based pagination si problèmes
+
+REQUÊTES OPTIMISÉES
+• Éviter SELECT * : sélectionner seulement champs nécessaires
+• Utiliser EXPLAIN pour analyser plans d'exécution
+• Limiter JOINs (dénormaliser si besoin)
+
+C. OPTIMISATIONS FRONTEND
+--------------------------
+
+CDN POUR BIBLIOTHÈQUES
+• Recommandation IMMÉDIATE :
+  - Leaflet, Chart.js, Bootstrap via CDN
+  - Réduction latence (serveurs proches utilisateurs)
+  - Cache navigateur partagé entre sites
+  - Gratuité
+
+EXEMPLE CDN
+```html
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.js"></script>
+```
+
+MINIFICATION & COMPRESSION
+• Minifier CSS/JS custom (Terser, cssnano)
+• Activer compression Gzip/Brotli serveur
+• Exemple Apache :
+```apache
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json
+</IfModule>
+```
+
+LAZY LOADING IMAGES (si photos friches phase 3+)
+• Attribut loading="lazy" sur <img>
+• Bibliothèques : lazysizes, lozad.js
+
+D. HÉBERGEMENT & INFRASTRUCTURE
+--------------------------------
+
+MVP (PHASE 1)
+• XAMPP local : parfait pour développement ✓
+• Déploiement test : serveur LAMP simple
+
+PHASE 2 (PRODUCTION)
+• Hébergement recommandé :
+  Option 1 : VPS (OVH, Scaleway, Digital Ocean)
+    - 🟢 Contrôle total
+    - 🟢 Coût maîtrisé (~10-30€/mois)
+    - 🔴 Administration manuelle
+
+  Option 2 : Hébergement managé PHP (o2switch, Infomaniak)
+    - 🟢 Administration simplifiée
+    - 🟢 Support technique
+    - 🔴 Moins de flexibilité
+
+  Option 3 : Cloud (AWS, Azure, GCP)
+    - 🟢 Scalabilité automatique
+    - 🟢 Services managés (BDD, cache)
+    - 🔴 Coût variable (attention facture)
+
+Recommandation : VPS pour phase 2 (équilibre coût/contrôle)
+
+PHASE 3 (SCALING)
+• Load balancing si >100 utilisateurs simultanés
+• Séparation serveur web / serveur BDD
+• CDN pour assets statiques (Cloudflare gratuit)
+
+SÉCURITÉ INFRASTRUCTURE
+• HTTPS obligatoire (Let's Encrypt gratuit)
+• Firewall (UFW, fail2ban)
+• Sauvegardes automatiques quotidiennes
+• Monitoring (UptimeRobot gratuit)
+
+E. TUILES CARTOGRAPHIQUES
+--------------------------
+
+OSM STANDARD (ACTUEL)
+• Tuiles OpenStreetMap gratuites
+• ✓ Gratuité totale
+• ✓ Pas de clé API
+• ⚠ Respecter Tile Usage Policy (pas d'abus)
+• ⚠ Pas de garantie disponibilité
+
+ALTERNATIVES SI TRAFIC ÉLEVÉ
+
+Option 1 : MapTiler
+• Tuiles raster et vector
+• Plan gratuit : 100 000 chargements/mois
+• Payant : à partir de 25€/mois
+
+Option 2 : Thunderforest
+• Styles variés (Outdoors, Transport, etc.)
+• Plan gratuit : 150 000 tuiles/mois
+• Payant : à partir de 20£/mois
+
+Option 3 : Esri
+• Tuiles satellites et rues
+• Gratuit si <2M basemaps/mois
+• Qualité excellente
+
+Option 4 : Auto-hébergement tuiles
+• TileServer GL (vector) ou mod_tile (raster)
+• 🟢 Contrôle total, pas de limite
+• 🔴 Infrastructure complexe (stockage, bande passante)
+• 🔴 Coût serveur + maintenance
+
+RECOMMANDATION
+• Phase 1-2 : OSM standard (suffit < 10k utilisateurs/mois)
+• Phase 3+ : MapTiler ou auto-hébergement si budget
+
+
+================================================================================
+            IX. CONFORMITÉ, LICENCES, SÉCURITÉ
+================================================================================
+
+A. LICENCES OPEN DATA
+---------------------
+
+OPENSTREETMAP
+• Licence : ODbL (Open Database License)
+• Obligation : Attribution "© OpenStreetMap contributors"
+• Conditions : Données dérivées doivent rester ouvertes (share-alike)
+• Application Friches : ✓ Conforme (attribution présente)
+
+DATA.GOUV.FR / ETALAB
+• Licence : Licence Ouverte 2.0
+• Obligation : Mentionner source et date dernière mise à jour
+• Conditions : Réutilisation libre (même commerciale)
+• Application Friches : ✓ À vérifier mentions sources
+
+BASIAS / BASOL (BRGM / MTE)
+• Licence : À vérifier selon conditions usage
+• Généralement : Usage public autorisé avec attribution
+• Application Friches : ✓ Vérifier CGU si intégration données
+
+B. RGPD (RÈGLEMENT GÉNÉRAL PROTECTION DONNÉES)
+-----------------------------------------------
+
+CHAMPS SENSIBLES FRICHES
+• proprio_personne : peut contenir noms personnes physiques
+• site_adresse : localisation précise
+
+OBLIGATIONS
+✓ Minimisation données (collecter seulement nécessaire)
+✓ Pseudonymisation si possible (noms propriétaires)
+✓ Droit d'accès, rectification, suppression (CRUD admin)
+✓ Sécurité stockage (hashage mots de passe ✓, HTTPS)
+✓ Registre traitements (documenter usage données)
+
+RECOMMANDATIONS
+• Anonymiser proprio_personne si publication open data
+  (ex: "Personne physique" au lieu de nom)
+• Durée conservation : définir politique (ex: 10 ans)
+• DPO (Délégué Protection Données) : identifier si structure >250 personnes
+
+C. SÉCURITÉ APPLICATION
+------------------------
+
+DÉJÀ IMPLÉMENTÉ ✓
+• Protection CSRF (tokens)
+• Requêtes préparées PDO (injection SQL)
+• Hashage bcrypt mots de passe
+• Validation entrées utilisateur
+• Sessions sécurisées
+
+À RENFORCER PHASE 2+
+• Rate limiting API (éviter abus)
+• Content Security Policy (CSP headers)
+• Audit sécurité régulier (OWASP Top 10)
+• Logs d'accès et modifications (déjà via friches_audit ✓)
+• Tests intrusion (pentest si données sensibles)
+
+D. ACCESSIBILITÉ (WCAG)
+------------------------
+
+ACTUELLEMENT
+• Bootstrap 5 : bonne base accessibilité
+• Contraste couleurs : à vérifier (WCAG AA minimum)
+
+RECOMMANDATIONS PHASE 2
+• Labels formulaires explicites
+• Navigation clavier complète (tab, enter, escape)
+• ARIA labels sur cartes et graphiques
+• Textes alternatifs images (si photos friches)
+• Tests lecteur d'écran (NVDA, JAWS)
+
+CIBLE
+• WCAG 2.1 niveau AA (standard administration publique)
+
+
+================================================================================
+              X. SYNTHÈSE DES RECOMMANDATIONS PAR PHASE
+================================================================================
+
+PHASE 1 - MVP (ACTUEL - 0-6 MOIS)
+----------------------------------
+✓ Conserver stack actuelle : PHP MVC léger + MariaDB + Leaflet + Chart.js
+✓ Finaliser fonctionnalités core :
+  - Tableau interactif avec filtres ✓
+  - Carte clustering ✓
+  - Analytics graphiques ✓
+  - CRUD admin ✓
+
+□ Définir gabarit CSV import + dictionnaire données
+□ Implémenter QA géographique automatisée (bbox FR, EPSG:4326)
+□ Dashboard qualité données (complétude, fraîcheur)
+□ Utiliser CDN pour bibliothèques (Leaflet, Chart.js, Bootstrap)
+□ Documenter API endpoints (JSON)
+□ Vérifier index SQL (comm_insee, site_type, site_statut)
+
+PHASE 2 - CONSOLIDATION (6-12 MOIS)
+------------------------------------
+□ Migration serveur production (VPS, HTTPS Let's Encrypt)
+□ Lazy loading carte par bounding box (si >10k friches)
+□ Cache Redis endpoints JSON/GeoJSON
+□ Structurer API REST propre (routes, versioning)
+□ Intégration SSO (France Connect ou SAML)
+□ Connecteurs automatiques (flux DREAL, EPF si possibles)
+□ Tests utilisateurs réguliers (collectivités pilotes)
+□ Accessibilité WCAG 2.1 AA
+□ Monitoring et alertes (UptimeRobot, logs)
+
+PHASE 3 - INDUSTRIALISATION (12-24 MOIS)
+-----------------------------------------
+□ Évaluer migration PostgreSQL + PostGIS (analyses spatiales)
+□ Envisager framework PHP (Laravel/Symfony) si équipe grandit
+□ Module scoring multi-critères friches
+□ Enrichissement automatique (croisement BASIAS/BASOL/SIRENE)
+□ Analytics avancés (ApexCharts si drill-down nécessaire)
+□ API publique documentée (OpenAPI/Swagger)
+□ Rate limiting et quotas API
+□ Authentification JWT pour API
+□ CDN assets (Cloudflare)
+□ Load balancing si >100 utilisateurs simultanés
+
+PHASE 4 - INNOVATION (24+ MOIS)
+--------------------------------
+□ Machine learning détection automatique friches (satellite)
+□ Module prédictif (scoring, évolution sites)
+□ Intégration imagerie (Street View, satellites)
+□ Cartes choroplèthes (Apache ECharts)
+□ Version mobile (app Android/iOS audits terrain)
+□ Analyses temporelles (historique évolution sites)
+□ Collaboration FixMyStreet-like (signalement citoyen)
+□ Export rapports automatisés (PDF, PowerPoint)
+
+
+================================================================================
+              XI. POSITIONNEMENT COMPÉTITIF & DIFFÉRENCIATION
+================================================================================
+
+FORCES APPLICATION FRICHES vs CARTOFRICHES
+-------------------------------------------
+✓ Analytics avancés (graphiques Chart.js interactifs)
+✓ Filtres multicritères combinés performants
+✓ Tableau interactif tri/pagination serveur
+✓ Synchronisation tableau ↔ carte
+✓ Architecture modulaire et évolutive
+✓ Open source (potentiel) vs plateforme fermée
+✓ Orientation aide décision (pas seulement catalogue)
+
+DIFFÉRENCIATION vs SOLUTIONS COMMERCIALES (SOGEFI, PROPTECH)
+-------------------------------------------------------------
+✓ Service public gratuit (freemium pour collectivités)
+✓ Données ouvertes par défaut (open data)
+✓ Pas de vendor lock-in
+✓ Interopérabilité (API publique)
+✓ Gouvernance publique (Cerema, DREAL)
+✓ Réseau territorial institutionnel fort
+
+COMPLÉMENTARITÉ CARTOFRICHES
+-----------------------------
+• Cartofriches = référentiel institutionnel (catalogue national)
+• Application Friches = outil analytique et aide décision
+• Possible intégration bidirectionnelle :
+  - Import données Cartofriches via API
+  - Export données enrichies vers Cartofriches
+  - Positionnement collaboratif, pas concurrent
+
+OPPORTUNITÉS PARTENARIATS
+--------------------------
+• SOGEFI : intégration Application Friches dans Mon Territoire Carto
+• BASIAS/BASOL : enrichissement automatique pollution
+• Sit@del : détection automatique requalifications en cours
+• Universités : R&D machine learning détection automatique
+• FixMyStreet : module signalement citoyen
+
+
+================================================================================
+              XII. RISQUES & POINTS DE VIGILANCE
+================================================================================
+
+RISQUES TECHNIQUES
+------------------
+🔴 Performance dégradée si >50 000 friches sans optimisation
+   → Mitigation : lazy loading, cache, pagination, clustering
+
+🔴 Dépendance tuiles OSM (pas de garantie disponibilité)
+   → Mitigation : fallback tuiles alternatives, auto-hébergement phase 3+
+
+🔴 Sécurité API si ouverture publique (scraping, DDoS)
+   → Mitigation : rate limiting, authentification, CAPTCHA si besoin
+
+RISQUES DONNÉES
+---------------
+🔴 Qualité hétérogène données sources (collectivités)
+   → Mitigation : QA automatisée, dashboard qualité, formation utilisateurs
+
+🔴 Fraîcheur données (mises à jour manuelles)
+   → Mitigation : workflows mises à jour, connecteurs automatiques phase 2
+
+🔴 Exhaustivité couverture nationale inégale
+   → Mitigation : campagnes incitatives collectivités, partenariats DREAL
+
+RISQUES ORGANISATIONNELS
+-------------------------
+🔴 Adoption faible utilisateurs (résistance changement)
+   → Mitigation : change management, formations, ambassadeurs
+
+🔴 Concurrence Cartofriches perçue (cannibalisation)
+   → Mitigation : positionnement complémentaire clair, partenariat Cerema
+
+🔴 Ressources développement limitées (équipe réduite)
+   → Mitigation : priorisation rigoureuse features, externalisation possible
+
+RISQUES JURIDIQUES
+-------------------
+🔴 Non-conformité RGPD (données personnelles propriétaires)
+   → Mitigation : anonymisation, registre traitements, DPO
+
+🔴 Licences open data non respectées (attribution manquante)
+   → Mitigation : audit licences, mentions légales complètes
+
+
+================================================================================
+              XIII. INDICATEURS SUCCÈS BENCHMARK
+================================================================================
+
+ADOPTION TECHNIQUE
+------------------
+✓ Temps chargement carte < 2 secondes
+✓ Temps chargement tableau < 1 seconde
+✓ Disponibilité service > 99% (phase production)
+✓ Taux erreur serveur < 0.1%
+✓ Score Lighthouse > 90 (performance, accessibilité)
+
+ADOPTION UTILISATEURS
+---------------------
+□ >50 organisations pilotes phase 2 (12 mois)
+□ >100 organisations actives phase 3 (24 mois)
+□ Taux activation >60% (inscription → utilisation régulière)
+□ NPS (Net Promoter Score) > 50
+□ Taux rebond < 40% (engagement)
+
+QUALITÉ DONNÉES
+---------------
+□ Taux complétude fiches > 80% (champs critiques)
+□ Taux géolocalisation > 95% (coordonnées valides)
+□ Fraîcheur < 6 mois (dernière mise à jour moyenne)
+□ Couverture >90% communes >50k habitants
+
+BENCHMARK vs CONCURRENCE
+-------------------------
+□ Fonctionnalités analytics : Application Friches > Cartofriches
+□ Performance carte : Application Friches ≥ Cartofriches
+□ UX/ergonomie : Application Friches > Cartofriches (cible)
+□ Interopérabilité API : Application Friches > Cartofriches
+□ Coût total possession : Application Friches < Solutions commerciales
+
+
+================================================================================
+              XIV. LIENS & RESSOURCES UTILES
+================================================================================
+
+DONNÉES OUVERTES
+----------------
+• data.gouv.fr : https://www.data.gouv.fr/
+• OpenStreetMap : https://www.openstreetmap.org/
+• IGN Géoportail : https://geoservices.ign.fr/
+• BASIAS : https://basias.brgm.fr/
+• BASOL : https://basol.developpement-durable.gouv.fr/
+• BAN (Base Adresse) : https://adresse.data.gouv.fr/
+• Catalogue APIs publiques : https://www.apiscene.io/
+
+SOLUTIONS COMPARABLES
+---------------------
+• Cartofriches (Cerema) : https://cartofriches.cerema.fr/
+• SOGEFI SIG : https://www.sogefi-sig.com/
+• Sit@del : https://www.statistiques.developpement-durable.gouv.fr/
+• FixMyStreet : https://www.fixmystreet.com/
+
+TECHNOLOGIES CARTOGRAPHIE
+-------------------------
+• Leaflet.js : https://leafletjs.com/
+• Mapbox GL JS : https://docs.mapbox.com/mapbox-gl-js/
+• OpenLayers : https://openlayers.org/
+• Kepler.gl : https://kepler.gl/
+
+TECHNOLOGIES GRAPHIQUES
+-----------------------
+• Chart.js : https://www.chartjs.org/
+• ApexCharts : https://apexcharts.com/
+• Apache ECharts : https://echarts.apache.org/
+
+FRAMEWORKS PHP
+--------------
+• Laravel : https://laravel.com/
+• Symfony : https://symfony.com/
+
+BASES DONNÉES SPATIALES
+------------------------
+• PostgreSQL : https://www.postgresql.org/
+• PostGIS : https://postgis.net/
+• MariaDB Spatial : https://mariadb.com/kb/en/spatial-index/
+
+OUTILS PERFORMANCE
+------------------
+• Redis : https://redis.io/
+• Cloudflare CDN : https://www.cloudflare.com/
+• Google Lighthouse : https://developers.google.com/web/tools/lighthouse
+
+SÉCURITÉ & CONFORMITÉ
+---------------------
+• OWASP Top 10 : https://owasp.org/www-project-top-ten/
+• RGPD (CNIL) : https://www.cnil.fr/fr/rgpd-par-ou-commencer
+• WCAG 2.1 : https://www.w3.org/WAI/WCAG21/quickref/
+• Let's Encrypt : https://letsencrypt.org/
+
+
+================================================================================
+                            CONCLUSION
+================================================================================
+
+Ce benchmark synthétisé met en évidence plusieurs constats clés :
+
+1. POSITIONNEMENT UNIQUE
+   L'Application Friches se positionne en complément de Cartofriches, avec
+   une orientation analytique et aide à la décision, là où Cartofriches joue
+   le rôle de référentiel institutionnel.
+
+2. CHOIX TECHNIQUES VALIDÉS
+   La stack actuelle (PHP MVC léger + MariaDB + Leaflet + Chart.js) est
+   parfaitement adaptée au MVP et phases 1-2. Les évolutions technologiques
+   (PostgreSQL/PostGIS, Laravel/Symfony, Mapbox GL JS, ApexCharts) ne se
+   justifieront qu'en phase 3-4 selon besoins réels.
+
+3. DIFFÉRENCIATION CLAIRE
+   • Analytics avancés (graphiques interactifs)
+   • Filtres multicritères performants
+   • Synchronisation tableau ↔ carte
+   • Orientation décision vs catalogue
+   • Open source et données ouvertes
+
+4. TRAJECTOIRE PROGRESSIVE
+   L'approche par phases permet de valider chaque étape avant d'investir
+   dans des technologies plus complexes. Principe "start simple, scale smart".
+
+5. ÉCOSYSTÈME FAVORABLE
+   Les sources de données ouvertes (BASIAS, BASOL, Cartofriches, data.gouv)
+   et l'écosystème technologique mature (Leaflet, Chart.js, PHP) offrent
+   un environnement favorable au développement et à la pérennité du projet.
+
+6. RISQUES MAÎTRISABLES
+   Les principaux risques (performance, qualité données, adoption) sont
+   identifiés et des stratégies de mitigation sont définies pour chaque phase.
+
+
+Le succès de l'Application Friches reposera sur :
+• Excellence UX/UI (simplicité, rapidité, clarté)
+• Qualité et fraîcheur des données (QA automatisée)
+• Interopérabilité (API publique, standards CNIG)
+• Accompagnement utilisateurs (formations, support)
+• Innovation continue (R&D, machine learning phase 4)
+
+
+================================================================================
+                      ANNEXE - GLOSSAIRE TECHNIQUE
+================================================================================
+
+API : Application Programming Interface (interface programmation)
+BDD : Base De Données
+CDN : Content Delivery Network (réseau distribution contenu)
+CNIG : Conseil National de l'Information Géolocalisée
+CRUD : Create, Read, Update, Delete (opérations base)
+CSP : Content Security Policy (politique sécurité contenu)
+CSRF : Cross-Site Request Forgery (attaque web)
+DREAL : Direction Régionale de l'Environnement, de l'Aménagement et du Logement
+EPCI : Établissement Public de Coopération Intercommunale
+EPF : Établissement Public Foncier
+GeoJSON : Format JSON pour données géographiques
+GIST : Generalized Search Tree (index spatial PostgreSQL)
+JWT : JSON Web Token (authentification)
+KPI : Key Performance Indicator (indicateur performance)
+LAMP : Linux, Apache, MySQL, PHP (stack web)
+MVC : Model-View-Controller (patron conception)
+NPS : Net Promoter Score (satisfaction utilisateurs)
+OAuth : Open Authorization (protocole authentification)
+ODbL : Open Database License (licence OSM)
+OGC : Open Geospatial Consortium (normalisation SIG)
+OSM : OpenStreetMap (carte collaborative libre)
+PDO : PHP Data Objects (accès bases données PHP)
+POI : Point Of Interest (point d'intérêt)
+PostGIS : Extension spatiale PostgreSQL
+QA : Quality Assurance (assurance qualité)
+R&D : Recherche & Développement
+REST : Representational State Transfer (architecture API)
+RGPD : Règlement Général sur la Protection des Données
+SaaS : Software as a Service (logiciel en tant que service)
+SAML : Security Assertion Markup Language (authentification SSO)
+SIG : Système d'Information Géographique
+SLA : Service Level Agreement (accord niveau service)
+SSO : Single Sign-On (authentification unique)
+TTL : Time To Live (durée vie cache)
+UX : User Experience (expérience utilisateur)
+VPS : Virtual Private Server (serveur privé virtuel)
+WCAG : Web Content Accessibility Guidelines (accessibilité web)
+WFS : Web Feature Service (service OGC vecteurs)
+WGS84 : World Geodetic System 1984 (référentiel géodésique)
+WMS : Web Map Service (service OGC raster)
+
+
+================================================================================
+FIN DU DOCUMENT - Benchmark Synthétisé - Version 1.0
+Date : 21 novembre 2025
+Projet : Application Friches
+Repository : github.com/Edu41-coder/Friches
+================================================================================

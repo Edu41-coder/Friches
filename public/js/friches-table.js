@@ -92,6 +92,7 @@ const FrichesTable = {
         // Effacer les filtres
         document.getElementById('clearFiltersBtn').addEventListener('click', () => {
             this.clearFilters();
+            this.applyFilters();
         });
         
         // Sauvegarder les colonnes
@@ -483,6 +484,9 @@ const FrichesTable = {
         const filterCommune = document.getElementById('filterCommune').value;
         if (filterCommune) this.filters.comm_nom = filterCommune;
         
+        const filterCodeInsee = document.getElementById('filterCodeInsee').value;
+        if (filterCodeInsee !== '' && filterCodeInsee !== null) this.filters.comm_insee = filterCodeInsee;
+        
         const filterPollution = document.getElementById('filterPollution').value;
         if (filterPollution) this.filters.sol_pollution_existe = filterPollution;
         
@@ -541,12 +545,17 @@ const FrichesTable = {
     clearFilters() {
         document.getElementById('filterType').value = '';
         document.getElementById('filterStatut').value = '';
-        document.getElementById('filterCommune').value = '';
         document.getElementById('filterPollution').value = '';
         document.getElementById('filterSurfaceMin').value = '';
         document.getElementById('filterSurfaceMax').value = '';
         document.getElementById('filterDateMin').value = '';
         document.getElementById('filterDateMax').value = '';
+        
+        // Réinitialiser les selects Select2
+        if (window.jQuery) {
+            jQuery('#filterCommune').val(null).trigger('change');
+            jQuery('#filterCodeInsee').val(null).trigger('change');
+        }
     },
     
     /**
